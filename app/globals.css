@@ -133,7 +133,7 @@
   --popover-foreground: oklch(0.145 0 0);
   /* --primary: oklch(0.205 0 0); */
   --primary: var(--primary-400);
-  --primary-foreground: var(--white);
+  --primary-foreground: var(--black);
   /* --secondary: oklch(0.97 0 0); */
   --secondary: var(--secondary-400);
   --secondary-foreground: var(--black);
@@ -220,7 +220,7 @@
     line-height: var(--leading-heading);
   }
   body {
-    @apply bg-background text-white;
+    @apply bg-background text-foreground;
     font-family: var(--font-body);
     line-height: var(--leading-body);
   }
