@@ -13,14 +13,14 @@ export function ProductCarousel() {
   if (isLoading) {
     return (
       <div className="flex justify-center p-8">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-green-500 border-t-transparent"></div>
+        <div className="border-primary-400 h-8 w-8 animate-spin rounded-full border-4 border-t-transparent"></div>
       </div>
     );
   }
 
   if (error || !data?.products) {
     return (
-      <div className="p-8 text-center text-red-500">
+      <div className="text-destructive p-8 text-center">
         無法載入商品資料，請稍後再試。
       </div>
     );
@@ -51,7 +51,7 @@ export function ProductCarousel() {
           },
           // desktop
           1024: {
-            slidesPerView: 3,
+            slidesPerView: 4,
             spaceBetween: 24,
           },
         }}
