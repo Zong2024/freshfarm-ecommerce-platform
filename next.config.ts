@@ -7,8 +7,23 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "images.unsplash.com",
-        port: "", // 如果網址沒有特定 port，留空即可
-        pathname: "/**", // 允許該網域下的所有路徑
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "plus.unsplash.com", // 新增這一段
+        pathname: "/**",
+      },
+      //TODO 未來統一把圖片更新同個位置
+      {
+        protocol: "https",
+        hostname: "media.istockphoto.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "cdn.pixabay.com", // 新增 Pixabay 支援
+        pathname: "/**",
       },
     ],
   },
