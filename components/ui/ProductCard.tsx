@@ -10,7 +10,7 @@ interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   return (
-    <div className="group relative flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-all hover:shadow-md">
+    <div className="group relative flex flex-col overflow-hidden rounded-xl border border-gray-50 bg-white shadow-sm transition-all hover:shadow-md">
       <Link
         href={`/products/${product.id}`}
         className="relative block aspect-square h-[250px] w-full overflow-hidden bg-gray-100 md:h-[280px]"
