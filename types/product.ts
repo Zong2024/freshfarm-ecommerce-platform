@@ -1,4 +1,5 @@
 import z from "zod";
+
 import { BaseResponseSchema, Pagination, PaginationSchema } from "./api";
 
 export const ProductSchema = z.object({
@@ -30,7 +31,14 @@ export const GetProductsResponseSchema = BaseResponseSchema.extend({
   pagination: PaginationSchema,
 });
 
+export const GetAllProductsResponseSchema = BaseResponseSchema.extend({
+  products: z.array(ProductSchema),
+});
+
 export type GetProductsResponse = z.infer<typeof GetProductsResponseSchema>;
+export type GetAllProductsResponse = z.infer<
+  typeof GetAllProductsResponseSchema
+>;
 
 export type ProductListUI = {
   products: Product[];
