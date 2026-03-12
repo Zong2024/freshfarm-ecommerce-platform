@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
-import { Noto_Sans_TC, Lato } from "next/font/google";
+import { Lato, Noto_Sans_TC } from "next/font/google";
+
+import StoreProvider from "@/lib/store/StoreProvider";
+
 import "./globals.css";
 
 const notoSTC = Noto_Sans_TC({
@@ -21,8 +24,6 @@ export const metadata: Metadata = {
   description: "",
 };
 
-import StoreProvider from "@/lib/store/StoreProvider";
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -30,7 +31,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${notoSTC.variable} ${lato.variable} antialiased`}>
+      <body
+        className={`${notoSTC.variable} ${lato.variable} text-base antialiased`}
+      >
         <StoreProvider>{children}</StoreProvider>
       </body>
     </html>
