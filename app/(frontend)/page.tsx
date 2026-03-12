@@ -1,6 +1,6 @@
+import { CategorySection } from "@/components/sections/CategorySection";
 import { Hero } from "@/components/sections/Hero";
 import { ProductCarousel } from "@/components/sections/ProductCarousel";
-import { CategorySection } from "@/components/sections/CategorySection";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 
 export default function Home() {
