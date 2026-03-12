@@ -1,8 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Product } from "@/types/product";
-import { Button } from "@/components/ui/button";
+
 import { ShoppingCart } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+
+import { Product } from "@/types/product";
 
 interface ProductCardProps {
   product: Product;
@@ -46,7 +49,7 @@ export function ProductCard({ product }: ProductCardProps) {
 
         <div className="mt-auto flex items-center justify-between">
           <div className="flex">
-            <span className="text-secondary-300 text-lg font-bold">
+            <span className="text-secondary-300 text-xl font-bold">
               NT$ {product.price}
             </span>
             {product.price < product.origin_price && (
