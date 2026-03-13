@@ -26,6 +26,10 @@ export const ProductSchema = z.object({
 
 export type Product = z.infer<typeof ProductSchema>;
 
+export const GetProductResponseSchema = BaseResponseSchema.extend({
+  product: ProductSchema,
+});
+
 export const GetProductsResponseSchema = BaseResponseSchema.extend({
   products: z.array(ProductSchema),
   pagination: PaginationSchema,
@@ -35,6 +39,7 @@ export const GetAllProductsResponseSchema = BaseResponseSchema.extend({
   products: z.array(ProductSchema),
 });
 
+export type GetProductResponseSchema = z.infer<typeof GetProductResponseSchema>;
 export type GetProductsResponse = z.infer<typeof GetProductsResponseSchema>;
 export type GetAllProductsResponse = z.infer<
   typeof GetAllProductsResponseSchema

@@ -1,10 +1,22 @@
 import {
   GetAllProductsResponseSchema,
+  GetProductResponseSchema,
   GetProductsResponseSchema,
 } from "@/types/product";
 
 import { baseUrl } from "./api";
 
+export const getProduct = async (id: string) => {
+  const response = await fetch(`${baseUrl}/product/${id}`, {
+    next: {
+      revalidate: 60,
+    },
+  });
+  if (!response.ok) throw new Error("Failed to fetch product data");
+  const data = await response.json();
+  const validatedData = GetProductResponseSchema.parse(data);
+  return validatedData.product;
+};
 export const getProducts = async (page = 1) => {
   const response = await fetch(`${baseUrl}/products?page=${page}`, {
     next: {
