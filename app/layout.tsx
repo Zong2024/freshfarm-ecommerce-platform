@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Lato, Noto_Sans_TC } from "next/font/google";
 
+import { Toaster } from "@/components/ui/sonner";
+
 import StoreProvider from "@/lib/store/StoreProvider";
 
 import "./globals.css";
@@ -30,11 +32,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="zh-TW">
       <body
         className={`${notoSTC.variable} ${lato.variable} text-base antialiased`}
       >
-        <StoreProvider>{children}</StoreProvider>
+        <StoreProvider>
+          {children}
+          <Toaster richColors closeButton position="top-center" />
+        </StoreProvider>
       </body>
     </html>
   );
