@@ -1,6 +1,7 @@
-import { CirclePlus, Minus, Plus, ShoppingCart } from "lucide-react";
+import { CirclePlus, ShoppingCart } from "lucide-react";
 
 import { ProductGallery } from "@/components/product/ProductGallery";
+import { QuantitySelector } from "@/components/ui/QuantitySelector";
 import { Button } from "@/components/ui/button";
 
 import { getProduct } from "@/lib/services/product";
@@ -20,7 +21,7 @@ export default async function ProductDetailPage({ params }: Props) {
         <div className="flex flex-col gap-4 md:col-span-5">
           <ProductGallery
             mainImage={product.imageUrl}
-            subImages={product.imagesUrl}
+            subImages={product.imagesUrl.slice(0, 3)}
             productTitle={product.title}
           />
         </div>
@@ -68,17 +69,8 @@ export default async function ProductDetailPage({ params }: Props) {
           </div>
 
           {/* 數量選擇器 (純 UI，保留給您後續實作狀態邏輯) */}
-          <div className="mt-2 flex w-full items-center justify-between rounded-sm border">
-            <button className="px-4 py-3 transition-colors hover:text-[#5c4a45]">
-              <Minus className="h-4 w-4" />
-            </button>
-            <div className="min-w-[3.5rem] px-6 py-3 text-center font-medium text-[#5c4a45]">
-              1
-            </div>
-            <button className="px-4 py-3 text-[#786965] transition-colors hover:text-[#5c4a45]">
-              <Plus className="h-4 w-4" />
-            </button>
-          </div>
+
+          <QuantitySelector />
 
           {/* 操作按鈕 */}
           <div className="flex flex-col gap-4 sm:flex-row">
