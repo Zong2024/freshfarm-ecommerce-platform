@@ -10,6 +10,13 @@ export const LoginResponseSchema = z.object({
 
 export type LoginResponse = z.infer<typeof LoginResponseSchema>;
 
+export const LoginRequestSchema = z.object({
+  username: z.string(),
+  password: z.string().min(6),
+});
+
+export type LoginRequest = z.infer<typeof LoginRequestSchema>;
+
 export interface AuthUser {
   uid: string;
 }
