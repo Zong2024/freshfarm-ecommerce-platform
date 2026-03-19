@@ -4,6 +4,8 @@ import { useState } from "react";
 
 import { Provider } from "react-redux";
 
+import { AuthWrapper } from "@/components/AuthWrapper";
+
 import { AppStore, makeStore } from "./store";
 
 export default function StoreProvider({
@@ -13,5 +15,9 @@ export default function StoreProvider({
 }) {
   const [store] = useState<AppStore>(() => makeStore());
 
-  return <Provider store={store}>{children}</Provider>;
+  return (
+    <Provider store={store}>
+      <AuthWrapper>{children}</AuthWrapper>
+    </Provider>
+  );
 }

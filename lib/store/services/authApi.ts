@@ -1,4 +1,4 @@
-import { LoginRequest, LoginResponse } from "@/types/auth";
+import { AuthCheckResponse, LoginRequest, LoginResponse } from "@/types/auth";
 
 import { baseApi } from "./baseApi";
 
@@ -12,7 +12,14 @@ export const authApi = baseApi.injectEndpoints({
       }),
       extraOptions: { noApiPath: true },
     }),
+    checkAuth: builder.mutation<AuthCheckResponse, void>({
+      query: () => ({
+        url: "/api/user/check",
+        method: "POST",
+      }),
+      extraOptions: { noApiPath: true },
+    }),
   }),
 });
 
-export const { useLoginMutation } = authApi;
+export const { useLoginMutation, useCheckAuthMutation } = authApi;

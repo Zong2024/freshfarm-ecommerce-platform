@@ -27,3 +27,16 @@ export interface AuthState {
   isAuthenticated: boolean;
   expired: number | null;
 }
+
+export const AuthCheckResponseSchema = z.discriminatedUnion("success", [
+  z.object({
+    success: z.literal(true),
+    uid: z.string(),
+  }),
+  z.object({
+    success: z.literal(false),
+    message: z.string(),
+  }),
+]);
+
+export type AuthCheckResponse = z.infer<typeof AuthCheckResponseSchema>;
