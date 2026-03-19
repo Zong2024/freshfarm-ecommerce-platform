@@ -1,8 +1,12 @@
 "use client";
 
 import { useState } from "react";
+
 import { Provider } from "react-redux";
-import { makeStore, AppStore } from "./store";
+
+import { AuthWrapper } from "@/components/AuthWrapper";
+
+import { AppStore, makeStore } from "./store";
 
 export default function StoreProvider({
   children,
@@ -11,5 +15,9 @@ export default function StoreProvider({
 }) {
   const [store] = useState<AppStore>(() => makeStore());
 
-  return <Provider store={store}>{children}</Provider>;
+  return (
+    <Provider store={store}>
+      <AuthWrapper>{children}</AuthWrapper>
+    </Provider>
+  );
 }

@@ -1,20 +1,28 @@
 "use client";
 
 import { useState } from "react";
+
 import Link from "next/link";
+
+import { LogOut, Menu, ShoppingCart, User } from "lucide-react";
+
 import {
   Sheet,
   SheetContent,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+
+import { logout } from "@/lib/store/features/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
+
 import { Button } from "../ui/button";
-import { LogOut, Menu, ShoppingCart, User } from "lucide-react";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   //TODO: 先用假狀態模擬登入，之後加入登入邏輯
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const dispatch = useAppDispatch();
+  const isLoggedIn = useAppSelector((state) => state.auth.isAuthenticated);
 
   const PUBLIC_ITEMS = [
     { label: "首頁", href: "/" },
@@ -27,7 +35,7 @@ export const Navbar = () => {
   ];
 
   const handleLogout = () => {
-    setIsLoggedIn(!false);
+    dispatch(logout());
   };
 
   return (
@@ -59,9 +67,7 @@ export const Navbar = () => {
               </Link>
             </div>
           ) : (
-            // TODO:先不跳轉頁面
-            // <Link href="/signin">
-            <Link href="" onClick={handleLogout}>
+            <Link href="/signin">
               <Button variant="outline" className="rounded-full px-6 font-bold">
                 登入
               </Button>
