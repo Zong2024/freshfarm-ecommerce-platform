@@ -1,11 +1,12 @@
 "use client";
 
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
 import "swiper/css";
+import { Autoplay } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+
+import { ProductCard } from "@/components/product/ProductCard";
 
 import { useGetProductsQuery } from "@/lib/store/services/productApi";
-import { ProductCard } from "@/components/ui/ProductCard";
 
 export function ProductCarousel() {
   const { data, isLoading, error } = useGetProductsQuery(1);

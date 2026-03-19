@@ -23,11 +23,11 @@ export const CategoryAccordion = ({
       <Accordion type="multiple" defaultValue={["origin"]} className="max-w-lg">
         {CategoryData.map((category) => (
           <AccordionItem key={category.id} value={category.id}>
-            <AccordionTrigger className="text-primary-300 hover:text-primary-400 px-3 py-4 text-xl">
+            <AccordionTrigger className="md:text-primary-300 hover:text-primary-400 b px-1 py-3 md:py-4 md:text-xl">
               {category.title}
             </AccordionTrigger>
             <AccordionContent>
-              <ul className="bg-primary-100 flex flex-col">
+              <ul className="md:bg-primary-100 flex flex-col">
                 {category.items.map((item) => (
                   <li
                     key={item}

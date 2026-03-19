@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+
 import { ChevronDownIcon } from "lucide-react";
 import { Accordion as AccordionPrimitive } from "radix-ui";
 
@@ -19,7 +20,7 @@ function AccordionItem({
   return (
     <AccordionPrimitive.Item
       data-slot="accordion-item"
-      className={cn("border-primary-200 border-b", className)}
+      className={cn("border-primary-200 md:border-b", className)}
       {...props}
     />
   );
