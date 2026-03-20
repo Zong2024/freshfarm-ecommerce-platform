@@ -29,6 +29,21 @@ export const cartApi = baseApi.injectEndpoints({
         method: "DELETE",
       }),
       invalidatesTags: ["Cart"],
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          cartApi.util.updateQueryData("getCart", undefined, (draft) => {
+            const index = draft.data.carts.findIndex((c) => c.id === id);
+            if (index !== -1) {
+              draft.data.carts.splice(index, 1);
+            }
+          })
+        );
+        try {
+          await queryFulfilled;
+        } catch {
+          patchResult.undo();
+        }
+      },
     }),
     updateCart: builder.mutation<void, UpdateCartRequest>({
       query: (data) => ({
@@ -42,6 +57,22 @@ export const cartApi = baseApi.injectEndpoints({
         },
       }),
       invalidatesTags: ["Cart"],
+      async onQueryStarted({ id, qty }, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          cartApi.util.updateQueryData("getCart", undefined, (draft) => {
+            const item = draft.data.carts.find((c) => c.id === id);
+            if (item) {
+              item.qty = qty;
+              item.total = item.product.price * qty;
+            }
+          })
+        );
+        try {
+          await queryFulfilled;
+        } catch {
+          patchResult.undo();
+        }
+      },
     }),
   }),
 });
