@@ -21,7 +21,7 @@ import { Button } from "../ui/button";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  //TODO: 先用假狀態模擬登入，之後加入登入邏輯
+
   const dispatch = useAppDispatch();
   const isLoggedIn = useAppSelector((state) => state.auth.isAuthenticated);
 
@@ -58,9 +58,9 @@ export const Navbar = () => {
               <span className="text-[24px] font-bold">{item.label}</span>
             </Link>
           ))}
-          <Link href="/cart" className="relative">
+          <div className="relative">
             <CartBadge />
-          </Link>
+          </div>
           {isLoggedIn ? (
             <div className="flex items-center gap-6 text-[24px] font-bold">
               <Link href="/orders">
@@ -78,9 +78,7 @@ export const Navbar = () => {
 
         {/* 行動版選單 (md 以下顯示) */}
         <div className="flex items-center gap-4 md:hidden">
-          <Link href="/cart">
-            <CartBadge />
-          </Link>
+          <CartBadge />
 
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>

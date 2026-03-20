@@ -33,7 +33,6 @@ export function CartBadge() {
         <span
           className={cn(
             "bg-destructive text-destructive-foreground animate-in fade-in zoom-in absolute -top-0.5 -right-0.5 flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-[10px] font-bold duration-300",
-            // 當數字超過兩位數時，稍微調整外觀
             totalQty > 9 ? "px-1.5" : "w-5"
           )}
         >
