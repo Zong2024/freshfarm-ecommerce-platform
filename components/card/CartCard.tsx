@@ -12,9 +12,16 @@ import { Button } from "../ui/button";
 interface CartCardProps {
   cartItems?: CartItem[];
   className?: string;
+  onUpdate: (id: string, product_id: string, qty: number) => Promise<void>;
+  onDelete: (id: string) => Promise<void>;
 }
 
-export const CartCard = ({ cartItems, className }: CartCardProps) => {
+export const CartCard = ({
+  cartItems,
+  className,
+  onUpdate,
+  onDelete,
+}: CartCardProps) => {
   if (!cartItems || cartItems.length === 0) {
     return (
       <div className={cn("p-8 text-center text-gray-400", className)}>
@@ -64,6 +71,7 @@ export const CartCard = ({ cartItems, className }: CartCardProps) => {
                 size="icon"
                 className="hover:text-destructive -me-2 -mt-1 h-8 w-8 text-gray-400"
                 aria-label="移除商品"
+                onClick={() => onDelete(item.id)}
               >
                 <Trash2 className="h-5 w-5" />
               </Button>
@@ -72,7 +80,10 @@ export const CartCard = ({ cartItems, className }: CartCardProps) => {
 
           {/* 數量選擇器 */}
           <div className="mt-4 border-t pt-3">
-            <QuantitySelector value={item.qty} />
+            <QuantitySelector
+              value={item.qty}
+              onChange={(newQty) => onUpdate(item.id, item.product_id, newQty)}
+            />
           </div>
         </article>
       ))}

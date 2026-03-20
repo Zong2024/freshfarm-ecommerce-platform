@@ -9,14 +9,37 @@ import { CartTable } from "@/components/table/CartTable";
 import { Button } from "@/components/ui/button";
 
 // import { useAppDispatch } from "@/lib/store/hooks";
-import { useGetCartQuery } from "@/lib/store/services/cartApi";
+import {
+  useDeleteCartMutation,
+  useGetCartQuery,
+  useUpdateCartMutation,
+} from "@/lib/store/services/cartApi";
 
 import Loading from "../loading";
 
 export default function CartPage() {
   // const dispatch = useAppDispatch();
   const { data, isLoading } = useGetCartQuery();
+  const [updateCart] = useUpdateCartMutation();
+  const [deleteCart] = useDeleteCartMutation();
+
   const cartItems = data?.data.carts;
+
+  const handleUpdate = async (id: string, product_id: string, qty: number) => {
+    try {
+      await updateCart({ id, product_id, qty }).unwrap();
+    } catch (error) {
+      console.error("更新數量失敗", error);
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteCart(id).unwrap();
+    } catch (error) {
+      console.error("移除商品失敗", error);
+    }
+  };
 
   if (isLoading) {
     return <Loading />;
@@ -46,8 +69,17 @@ export default function CartPage() {
 
   return (
     <div className="container mx-auto p-3">
-      <CartTable cartItems={cartItems} />
-      <CartCard className="md:hidden" cartItems={cartItems} />
+      <CartTable
+        cartItems={cartItems}
+        onUpdate={handleUpdate}
+        onDelete={handleDelete}
+      />
+      <CartCard
+        className="md:hidden"
+        cartItems={cartItems}
+        onUpdate={handleUpdate}
+        onDelete={handleDelete}
+      />
       <div className="flex justify-end py-5">
         <Button variant="default" className="w-full text-white md:w-1/3">
           前往付款

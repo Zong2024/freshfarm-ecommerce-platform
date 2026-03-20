@@ -9,8 +9,15 @@ import { Button } from "../ui/button";
 
 interface CartTableProps {
   cartItems?: CartItem[];
+  onUpdate: (id: string, product_id: string, qty: number) => Promise<void>;
+  onDelete: (id: string) => Promise<void>;
 }
-export const CartTable = ({ cartItems }: CartTableProps) => {
+
+export const CartTable = ({
+  cartItems,
+  onUpdate,
+  onDelete,
+}: CartTableProps) => {
   return (
     <div className="mx-auto my-15 max-w-324 rounded-lg bg-white px-9 shadow-sm">
       <table className="hidden w-full min-w-150 table-fixed md:table">
@@ -47,19 +54,24 @@ export const CartTable = ({ cartItems }: CartTableProps) => {
               </td>
               <td className="py-6">
                 <div className="flex justify-center">
-                  <QuantitySelector value={item.qty} />
+                  <QuantitySelector
+                    value={item.qty}
+                    onChange={(newQty) =>
+                      onUpdate(item.id, item.product_id, newQty)
+                    }
+                  />
                 </div>
               </td>
               <td className="text-primary-400 py-6 text-center font-bold">
                 NT$ {item.total}
               </td>
-
               <td className="py-6 text-center">
                 <Button
                   variant="ghost"
                   size="icon"
                   className="hover:text-destructive text-gray-400"
                   aria-label="移除商品"
+                  onClick={() => onDelete(item.id)}
                 >
                   <Trash2 className="h-5 w-5" />
                 </Button>
