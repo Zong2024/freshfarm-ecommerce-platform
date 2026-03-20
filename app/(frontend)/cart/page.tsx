@@ -8,7 +8,6 @@ import { CartCard } from "@/components/card/CartCard";
 import { CartTable } from "@/components/table/CartTable";
 import { Button } from "@/components/ui/button";
 
-// import { useAppDispatch } from "@/lib/store/hooks";
 import {
   useDeleteCartMutation,
   useGetCartQuery,
@@ -18,7 +17,6 @@ import {
 import Loading from "../loading";
 
 export default function CartPage() {
-  // const dispatch = useAppDispatch();
   const { data, isLoading } = useGetCartQuery();
   const [updateCart] = useUpdateCartMutation();
   const [deleteCart] = useDeleteCartMutation();

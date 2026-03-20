@@ -46,3 +46,11 @@ export const AddToCartResponseSchema = z.object({
 });
 
 export type AddToCartResponse = z.infer<typeof AddToCartResponseSchema>;
+
+export const UpdateCartRequestSchema = z.object({
+  id: z.string(),
+  product_id: z.string(),
+  qty: z.number(),
+});
+
+export type UpdateCartRequest = z.infer<typeof UpdateCartRequestSchema>;
