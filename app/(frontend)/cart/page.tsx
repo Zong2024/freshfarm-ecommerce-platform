@@ -39,14 +39,12 @@ export default function CartPage() {
     }
   };
 
-  if (isLoading) {
-    return <Loading />;
-  }
+  if (isLoading) return <Loading />;
 
   // 處理購物車為空的狀態
   if (!cartItems || cartItems.length === 0) {
     return (
-      <div className="container mx-auto flex min-h-[50vh] flex-col items-center justify-center p-3 text-center">
+      <div className="container mx-auto flex min-h-screen flex-col items-center pt-[33vh] text-center">
         <div className="mb-6 rounded-full bg-gray-100 p-6 text-gray-400">
           <ShoppingBag className="h-16 w-16" />
         </div>
