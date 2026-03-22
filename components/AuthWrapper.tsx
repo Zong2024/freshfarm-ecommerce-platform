@@ -5,7 +5,11 @@ import { useEffect } from "react";
 import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
 
-import { logout, setCredentials } from "@/lib/store/features/auth/authSlice";
+import {
+  logout,
+  restoreAuth,
+  setCredentials,
+} from "@/lib/store/features/auth/authSlice";
 import { useCheckAuthMutation } from "@/lib/store/services/authApi";
 
 export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
@@ -22,15 +26,7 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
       try {
         const response = await checkAuth().unwrap();
         if (response.success === true) {
-          dispatch(
-            setCredentials({
-              uid: response.uid || uid || "",
-              token: token,
-              expired: 0,
-              message: "已登入",
-              status: true,
-            })
-          );
+          dispatch(restoreAuth({ uid: response.uid || uid || "", token }));
         } else {
           dispatch(logout());
         }

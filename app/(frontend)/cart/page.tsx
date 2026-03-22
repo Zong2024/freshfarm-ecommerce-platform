@@ -1,13 +1,15 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-import { ShoppingBag } from "lucide-react";
+import { MoveRight, ShoppingBag } from "lucide-react";
 
 import { CartCard } from "@/components/card/CartCard";
 import { CartTable } from "@/components/table/CartTable";
 import { Button } from "@/components/ui/button";
 
+import { useAppSelector } from "@/lib/store/hooks";
 import {
   useDeleteCartMutation,
   useGetCartQuery,
@@ -23,6 +25,9 @@ export default function CartPage() {
 
   const cartItems = data?.data.carts;
 
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
+  const router = useRouter();
+
   const handleUpdate = async (id: string, product_id: string, qty: number) => {
     try {
       await updateCart({ id, product_id, qty }).unwrap();
@@ -36,6 +41,14 @@ export default function CartPage() {
       await deleteCart(id).unwrap();
     } catch (error) {
       console.error("移除商品失敗", error);
+    }
+  };
+
+  const handleCheckoutRedirect = () => {
+    if (isAuthenticated) {
+      router.push("/checkout");
+    } else {
+      router.push("/signin");
     }
   };
 
@@ -77,8 +90,13 @@ export default function CartPage() {
         onDelete={handleDelete}
       />
       <div className="flex justify-end py-5">
-        <Button variant="default" className="w-full text-white md:w-1/3">
+        <Button
+          variant="default"
+          className="w-full text-white md:w-1/3"
+          onClick={handleCheckoutRedirect}
+        >
           前往付款
+          <MoveRight />
         </Button>
       </div>
     </div>
