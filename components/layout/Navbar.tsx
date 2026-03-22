@@ -16,11 +16,12 @@ import {
 import { logout } from "@/lib/store/features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 
+import { CartBadge } from "../badge/CartBadge";
 import { Button } from "../ui/button";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  //TODO: 先用假狀態模擬登入，之後加入登入邏輯
+
   const dispatch = useAppDispatch();
   const isLoggedIn = useAppSelector((state) => state.auth.isAuthenticated);
 
@@ -40,7 +41,7 @@ export const Navbar = () => {
 
   return (
     <header className="bg-background/95 supports-backdrop-filter:bg-background/60 sticky top-0 z-50 w-full border-b backdrop-blur">
-      <div className="text-primary-400 container mx-auto flex items-center justify-between px-9 py-7">
+      <div className="text-primary-400 container mx-auto flex items-center justify-between px-9 py-4 md:py-7">
         {/* Logo 區域 */}
         <Link href="/" className="text-xl font-bold">
           LOGO
@@ -57,13 +58,13 @@ export const Navbar = () => {
               <span className="text-[24px] font-bold">{item.label}</span>
             </Link>
           ))}
+          <div className="relative">
+            <CartBadge />
+          </div>
           {isLoggedIn ? (
             <div className="flex items-center gap-6 text-[24px] font-bold">
               <Link href="/orders">
                 <User className="font-bold"></User>
-              </Link>
-              <Link href="/cart" className="relative">
-                <ShoppingCart className="h-6 w-6" />
               </Link>
             </div>
           ) : (
@@ -77,9 +78,7 @@ export const Navbar = () => {
 
         {/* 行動版選單 (md 以下顯示) */}
         <div className="flex items-center gap-4 md:hidden">
-          <Link href="/cart">
-            <ShoppingCart className="h-6 w-6" />
-          </Link>
+          <CartBadge />
 
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>

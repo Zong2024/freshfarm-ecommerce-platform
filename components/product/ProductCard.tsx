@@ -1,11 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { ShoppingCart } from "lucide-react";
-
-import { Button } from "@/components/ui/button";
-
 import { Product } from "@/types/product";
+
+import { AddToCartButton } from "../button/AddToCartButton";
 
 interface ProductCardProps {
   product: Product;
@@ -16,7 +14,7 @@ export function ProductCard({ product }: ProductCardProps) {
     <div className="group relative flex flex-col overflow-hidden rounded-xl border border-gray-50 bg-white shadow-sm transition-all hover:shadow-md">
       <Link
         href={`/products/${product.id}`}
-        className="relative block aspect-square h-[250px] w-full overflow-hidden bg-gray-100 md:h-[280px]"
+        className="relative block aspect-square h-62.5 w-full overflow-hidden bg-gray-100 md:h-70"
       >
         <Image
           src={product.imageUrl}
@@ -43,7 +41,7 @@ export function ProductCard({ product }: ProductCardProps) {
         >
           {product.title}
         </Link>
-        <div className="line-clamp-2 h-[3rem] leading-6 text-gray-300">
+        <div className="line-clamp-2 h-12 leading-6 text-gray-300">
           {product.description}
         </div>
 
@@ -58,13 +56,7 @@ export function ProductCard({ product }: ProductCardProps) {
               </span>
             )}
           </div>
-          <Button
-            size="icon"
-            className="bg-primary-100 hover:bg-primary-300 rounded-full"
-            title="加入購物車"
-          >
-            <ShoppingCart className="h-4 w-4" />
-          </Button>
+          <AddToCartButton productId={product.id} />
         </div>
       </div>
     </div>

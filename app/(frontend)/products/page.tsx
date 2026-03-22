@@ -3,7 +3,7 @@ import { ChevronDown } from "lucide-react";
 import { CategoryAccordion } from "@/components/CategoryAccordion";
 import { CustomPagination } from "@/components/CustomPagination";
 import { SearchBar } from "@/components/SearchBar";
-import { ProductCard } from "@/components/ui/ProductCard";
+import { ProductCard } from "@/components/product/ProductCard";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -69,27 +69,25 @@ export default async function ProductsPage({
 
   return (
     <div className="container mx-auto px-1 py-8">
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-12">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-12">
         <aside className="md:col-span-3">
           <div className="md:hidden">
             <Popover>
               <PopoverTrigger asChild>
                 <Button
-                  variant="outline"
-                  className="h-12 w-full justify-between text-gray-300"
+                  variant="ghost"
+                  className="h-12 w-full justify-between border border-gray-200 bg-white px-3 py-4 text-gray-300"
                 >
                   <span className="text-base">產品分類</span>
-                  <ChevronDown className="size-4" />
+                  <ChevronDown className="size-4 text-black" />
                 </Button>
               </PopoverTrigger>
               <PopoverContent
-                className="border-primary-200 w-[var(--radix-popover-trigger-width)] rounded-xl bg-white p-4 shadow-xl"
+                className="border-primary-200 w-(--radix-popover-trigger-width) rounded-xl bg-white p-4 shadow-xl"
                 align="start"
               >
                 {/* 所有產品 - 獨立按鈕 */}
-                <div className="mb-1 border-b border-emerald-50 pb-3 font-medium text-emerald-900">
-                  所有產品
-                </div>
+                <div className="px-1">所有產品</div>
                 <CategoryAccordion CategoryData={CATEGORY_DATA} />
               </PopoverContent>
             </Popover>
