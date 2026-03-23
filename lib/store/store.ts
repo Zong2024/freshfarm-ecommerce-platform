@@ -3,6 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./features/auth/authSlice";
 import cartReducer from "./features/cart/cartSlice";
 import { authListenerMiddleware } from "./middleware/authListener";
+import { cartSyncMiddleware } from "./middleware/cartSyncMiddleware";
 import { baseApi } from "./services/baseApi";
 
 export const makeStore = () => {
@@ -15,6 +16,7 @@ export const makeStore = () => {
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware()
         .prepend(authListenerMiddleware.middleware)
+        .prepend(cartSyncMiddleware.middleware)
         .concat(baseApi.middleware),
   });
 };

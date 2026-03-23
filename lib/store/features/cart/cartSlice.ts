@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 import { LocalCartItem } from "@/types/cart";
-import { CartProduct, Product } from "@/types/product";
+import { CartProduct } from "@/types/product";
 
 export interface CartItem {
   items: LocalCartItem[];
@@ -15,6 +15,9 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
+    hydrateLocalCart: (state, action: PayloadAction<LocalCartItem[]>) => {
+      state.items = action.payload;
+    },
     addToLocalCart: (
       state,
       action: PayloadAction<{ product: CartProduct; qty: number }>
@@ -42,5 +45,5 @@ const cartSlice = createSlice({
   },
 });
 
-export const { addToLocalCart } = cartSlice.actions;
+export const { addToLocalCart, hydrateLocalCart } = cartSlice.actions;
 export default cartSlice.reducer;
