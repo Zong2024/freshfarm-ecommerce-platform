@@ -10,21 +10,23 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
+  const { imageUrl, title, category, id, description, price, origin_price } =
+    product;
   return (
     <div className="group relative flex flex-col overflow-hidden rounded-xl border border-gray-50 bg-white shadow-sm transition-all hover:shadow-md">
       <Link
-        href={`/products/${product.id}`}
-        className="relative block aspect-square h-62.5 w-full overflow-hidden bg-gray-100 md:h-70"
+        href={`/products/${id}`}
+        className="relative block aspect-square w-full overflow-hidden bg-gray-100"
       >
         <Image
-          src={product.imageUrl}
-          alt={product.title}
+          src={imageUrl}
+          alt={title}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className="object-cover transition-transform duration-300 group-hover:scale-105"
         />
 
-        {product.price < product.origin_price && (
+        {price < origin_price && (
           <div className="absolute top-2 left-2 rounded-full bg-red-500 px-2 py-1 text-xs font-bold text-white">
             特價
           </div>
@@ -32,31 +34,29 @@ export function ProductCard({ product }: ProductCardProps) {
       </Link>
 
       <div className="flex flex-1 flex-col p-4">
-        <div className="mb-1 text-xs font-medium text-gray-500">
-          {product.category}
-        </div>
+        <div className="mb-1 text-xs font-medium text-gray-400">{category}</div>
         <Link
-          href={`/products/${product.id}`}
+          href={`/products/${id}`}
           className="hover:text-primary-200 mb-2 line-clamp-2 text-xl font-semibold"
         >
-          {product.title}
+          {title}
         </Link>
         <div className="line-clamp-2 h-12 leading-6 text-gray-300">
-          {product.description}
+          {description}
         </div>
 
         <div className="mt-auto flex items-center justify-between">
           <div className="flex">
             <span className="text-secondary-300 text-xl font-bold">
-              NT$ {product.price}
+              NT$ {price}
             </span>
-            {product.price < product.origin_price && (
+            {price < origin_price && (
               <span className="ms-2 text-sm text-gray-400 line-through">
-                NT$ {product.origin_price}
+                NT$ {origin_price}
               </span>
             )}
           </div>
-          <AddToCartButton productId={product.id} />
+          <AddToCartButton productId={id} />
         </div>
       </div>
     </div>
