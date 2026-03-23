@@ -56,7 +56,7 @@ export function ProductCard({ product }: ProductCardProps) {
               </span>
             )}
           </div>
-          <AddToCartButton productId={id} />
+          <AddToCartButton product={product} />
         </div>
       </div>
     </div>

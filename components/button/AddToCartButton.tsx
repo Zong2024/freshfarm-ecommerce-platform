@@ -1,30 +1,21 @@
 "use client";
-
-import { useTransition } from "react";
-
+import { useCart } from "@/hooks/useCart";
 import { Loader2, ShoppingCart } from "lucide-react";
 
-import { useAddToCartMutation } from "@/lib/store/services/cartApi";
 import { cn } from "@/lib/utils";
 
-import { CustomToast } from "../CustomToast";
+import { CartProduct } from "@/types/product";
+
 import { Button } from "../ui/button";
 
 interface AddToCartButtonProps {
-  productId: string;
+  product: CartProduct;
 }
 
-export const AddToCartButton = ({ productId }: AddToCartButtonProps) => {
-  const [addToCart, { isLoading }] = useAddToCartMutation();
-
-  const handleAddToCart = async () => {
-    try {
-      await addToCart({ product_id: productId, qty: 1 }).unwrap();
-      CustomToast("success", "加入購物車成功");
-    } catch (error) {
-      console.error("加入購物車失敗:", error);
-      CustomToast("warning", "加入失敗，請稍後再試。");
-    }
+export const AddToCartButton = ({ product }: AddToCartButtonProps) => {
+  const { addToCart, isLoading } = useCart();
+  const handleAddToCart = async (qty: number = 1) => {
+    addToCart(product, qty);
   };
   return (
     <Button
@@ -34,7 +25,7 @@ export const AddToCartButton = ({ productId }: AddToCartButtonProps) => {
         isLoading && "cursor-not-allowed opacity-70"
       )}
       title="加入購物車"
-      onClick={handleAddToCart}
+      onClick={() => handleAddToCart(1)}
       disabled={isLoading}
     >
       {isLoading ? (
