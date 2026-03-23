@@ -59,6 +59,9 @@ const cartSlice = createSlice({
         existingItem.final_total = qty * existingItem.product.price;
       }
     },
+    clearLocalCart: (state) => {
+      state.items = [];
+    },
   },
 });
 
@@ -67,5 +70,6 @@ export const {
   hydrateLocalCart,
   deleteFromLocalCart,
   updateLocalCart,
+  clearLocalCart,
 } = cartSlice.actions;
 export default cartSlice.reducer;

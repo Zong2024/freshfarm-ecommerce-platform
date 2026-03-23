@@ -56,7 +56,7 @@ export default function CartPage() {
   }
 
   return (
-    <div className="container mx-auto p-3">
+    <div className="container mx-auto min-h-screen p-3">
       <CartTable
         cartItems={cartItems}
         onUpdate={handleUpdate}

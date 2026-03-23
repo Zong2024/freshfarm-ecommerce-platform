@@ -2,6 +2,7 @@ import { CustomToast } from "@/components/CustomToast";
 
 import {
   addToLocalCart,
+  clearLocalCart,
   deleteFromLocalCart,
   updateLocalCart,
 } from "@/lib/store/features/cart/cartSlice";
@@ -79,7 +80,16 @@ export const useCart = () => {
       console.error("更新數量失敗", error);
     }
   };
-
+  const mergeCart = async () => {
+    if (LocalCartItem.length === 0) return;
+    try {
+      const promises = LocalCartItem.map((item) =>
+        postCart({ product_id: item.product_id, qty: item.qty }).unwrap()
+      );
+      await Promise.all(promises);
+      dispatch(clearLocalCart());
+    } catch (error) {}
+  };
   const isActionLoading = isGetting || isPosting || isDeleting || isUpdating;
   return {
     addToCart,
@@ -87,6 +97,7 @@ export const useCart = () => {
     handleUpdate,
     cartTotalQty,
     cartItems,
+    mergeCart,
     isLoading: isActionLoading,
     isError,
     isMounted,

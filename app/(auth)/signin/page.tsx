@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 
+import { useCart } from "@/hooks/useCart";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Facebook, Leaf, Loader2, Lock, Mail } from "lucide-react";
 import { useForm } from "react-hook-form";
@@ -33,6 +34,7 @@ const formSchema = z.object({
 });
 
 export default function SignInPage() {
+  const { mergeCart } = useCart();
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectUrl = searchParams.get("redirect") || "/";
@@ -43,7 +45,6 @@ export default function SignInPage() {
       password: "",
     },
   });
-
   const [login, { isLoading }] = useLoginMutation();
   const dispatch = useAppDispatch();
 
@@ -59,6 +60,7 @@ export default function SignInPage() {
           status: response.status,
         })
       );
+      await mergeCart();
       CustomToast("success", "登入成功！歡迎回來");
       router.push(redirectUrl);
     } catch (error) {
