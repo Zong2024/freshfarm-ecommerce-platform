@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Facebook, Leaf, Loader2, Lock, Mail } from "lucide-react";
@@ -34,6 +34,8 @@ const formSchema = z.object({
 
 export default function SignInPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectUrl = searchParams.get("redirect") || "/";
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -58,7 +60,7 @@ export default function SignInPage() {
         })
       );
       CustomToast("success", "登入成功！歡迎回來");
-      router.push("/");
+      router.push(redirectUrl);
     } catch (error) {
       console.log(error);
       CustomToast("warning", "登入失敗，請檢查您的帳號密碼");

@@ -48,7 +48,7 @@ export default function CartPage() {
     if (isAuthenticated) {
       router.push("/checkout");
     } else {
-      router.push("/signin");
+      router.push("/signin?redirect=/checkout");
     }
   };
 
