@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
+import { useCart } from "@/hooks/useCart";
 import { MoveRight, ShoppingBag } from "lucide-react";
 
 import { CartCard } from "@/components/card/CartCard";
@@ -10,39 +11,16 @@ import { CartTable } from "@/components/table/CartTable";
 import { Button } from "@/components/ui/button";
 
 import { useAppSelector } from "@/lib/store/hooks";
-import {
-  useDeleteCartMutation,
-  useGetCartQuery,
-  useUpdateCartMutation,
-} from "@/lib/store/services/cartApi";
+import { useUpdateCartMutation } from "@/lib/store/services/cartApi";
 
 import Loading from "../loading";
 
 export default function CartPage() {
-  const { data, isLoading } = useGetCartQuery();
-  const [updateCart] = useUpdateCartMutation();
-  const [deleteCart] = useDeleteCartMutation();
-
-  const cartItems = data?.data.carts;
+  const { cartItems, isLoading, handleDelete, handleUpdate, isMounted } =
+    useCart();
 
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
   const router = useRouter();
-
-  const handleUpdate = async (id: string, product_id: string, qty: number) => {
-    try {
-      await updateCart({ id, product_id, qty }).unwrap();
-    } catch (error) {
-      console.error("更新數量失敗", error);
-    }
-  };
-
-  const handleDelete = async (id: string) => {
-    try {
-      await deleteCart(id).unwrap();
-    } catch (error) {
-      console.error("移除商品失敗", error);
-    }
-  };
 
   const handleCheckoutRedirect = () => {
     if (isAuthenticated) {
@@ -53,6 +31,7 @@ export default function CartPage() {
   };
 
   if (isLoading) return <Loading />;
+  if (!isMounted) return <Loading />;
 
   // 處理購物車為空的狀態
   if (!cartItems || cartItems.length === 0) {

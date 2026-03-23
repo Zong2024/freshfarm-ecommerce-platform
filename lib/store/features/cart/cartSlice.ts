@@ -42,8 +42,30 @@ const cartSlice = createSlice({
         state.items.push(newItem);
       }
     },
+    deleteFromLocalCart: (state, action: PayloadAction<string>) => {
+      state.items = state.items.filter((item) => item.id !== action.payload);
+    },
+    updateLocalCart: (
+      state,
+      action: PayloadAction<{ product_id: string; qty: number }>
+    ) => {
+      const { product_id, qty } = action.payload;
+      const existingItem = state.items.find(
+        (item) => item.product_id === product_id
+      );
+      if (existingItem) {
+        existingItem.qty = qty;
+        existingItem.total = qty * existingItem.product.price;
+        existingItem.final_total = qty * existingItem.product.price;
+      }
+    },
   },
 });
 
-export const { addToLocalCart, hydrateLocalCart } = cartSlice.actions;
+export const {
+  addToLocalCart,
+  hydrateLocalCart,
+  deleteFromLocalCart,
+  updateLocalCart,
+} = cartSlice.actions;
 export default cartSlice.reducer;

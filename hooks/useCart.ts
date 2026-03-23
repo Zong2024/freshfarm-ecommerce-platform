@@ -1,15 +1,41 @@
 import { CustomToast } from "@/components/CustomToast";
 
-import { addToLocalCart } from "@/lib/store/features/cart/cartSlice";
+import {
+  addToLocalCart,
+  deleteFromLocalCart,
+  updateLocalCart,
+} from "@/lib/store/features/cart/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
-import { usePostCartMutation } from "@/lib/store/services/cartApi";
+import {
+  useDeleteCartMutation,
+  useGetCartQuery,
+  usePostCartMutation,
+  useUpdateCartMutation,
+} from "@/lib/store/services/cartApi";
 
 import { CartProduct, CartProductSchema } from "@/types/product";
 
+import { useIsMounted } from "./useIsMounted";
+
 export const useCart = () => {
+  const isMounted = useIsMounted();
   const { isAuthenticated } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
-  const [postCart, { isLoading }] = usePostCartMutation();
+  const LocalCartItem = useAppSelector((state) => state.cart.items);
+  const [postCart, { isLoading: isPosting }] = usePostCartMutation();
+  const [deleteCart, { isLoading: isDeleting }] = useDeleteCartMutation();
+  const [updateCart, { isLoading: isUpdating }] = useUpdateCartMutation();
+  const {
+    data: apiCartData,
+    isLoading: isGetting,
+    isError,
+  } = useGetCartQuery(undefined, {
+    skip: !isAuthenticated,
+  });
+  const cartItems = isAuthenticated
+    ? apiCartData?.data?.carts || []
+    : LocalCartItem;
+  const cartTotalQty = cartItems.reduce((acc, item) => acc + item.qty, 0);
 
   const addToCart = async (product: CartProduct, qty: number = 1) => {
     try {
@@ -26,6 +52,43 @@ export const useCart = () => {
       CustomToast("warning", "加入失敗，請稍後再試。");
     }
   };
+  const handleDelete = async (id: string) => {
+    try {
+      if (isAuthenticated) {
+        await deleteCart(id).unwrap();
+        CustomToast("success", "移除商品成功");
+      } else {
+        dispatch(deleteFromLocalCart(id));
+        CustomToast("success", "移除商品成功");
+      }
+    } catch (error) {
+      console.error("移除商品失敗", error);
+      CustomToast("warning", "移除失敗，請稍後再試。");
+    }
+  };
+  const handleUpdate = async (id: string, product_id: string, qty: number) => {
+    try {
+      if (isAuthenticated) {
+        await updateCart({ id, product_id, qty }).unwrap();
+        CustomToast("success", "更新數量成功");
+      } else {
+        dispatch(updateLocalCart({ product_id, qty }));
+        CustomToast("success", "更新數量成功");
+      }
+    } catch (error) {
+      console.error("更新數量失敗", error);
+    }
+  };
 
-  return { addToCart, isLoading };
+  const isActionLoading = isGetting || isPosting || isDeleting || isUpdating;
+  return {
+    addToCart,
+    handleDelete,
+    handleUpdate,
+    cartTotalQty,
+    cartItems,
+    isLoading: isActionLoading,
+    isError,
+    isMounted,
+  };
 };

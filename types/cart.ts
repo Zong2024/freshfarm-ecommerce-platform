@@ -8,7 +8,7 @@ export const CartItemSchema = z.object({
   qty: z.number(),
   total: z.number(),
   final_total: z.number(),
-  product: ProductSchema,
+  product: CartProductSchema,
 });
 export type CartItem = z.infer<typeof CartItemSchema>;
 export const LocalCartItemSchema = z.object({
