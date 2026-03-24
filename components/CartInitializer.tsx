@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 
+import { useHasHydrated } from "@/hooks/useHasHydrated";
 import { useDispatch } from "react-redux";
 
 import {
@@ -11,7 +12,11 @@ import {
 
 export const CartInitializer = () => {
   const dispatch = useDispatch();
+  const hasHydrated = useHasHydrated();
+
   useEffect(() => {
+    if (!hasHydrated) return;
+
     try {
       const savedCart = localStorage.getItem("guestCart");
       if (savedCart) {
@@ -29,7 +34,7 @@ export const CartInitializer = () => {
       localStorage.removeItem("guestCart");
       dispatch(setCartHydrated());
     }
-  }, [dispatch]);
+  }, [dispatch, hasHydrated]);
 
   return null;
 };

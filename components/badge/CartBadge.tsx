@@ -10,9 +10,17 @@ import { cn } from "@/lib/utils";
 export function CartBadge() {
   const { cartTotalQty, isLoading, isError, hasHydrated } = useCart();
 
+  if (!hasHydrated) {
+    return (
+      <div className="relative inline-flex items-center p-2">
+        <ShoppingCart className="text-foreground/50 h-6 w-6" />
+      </div>
+    );
+  }
+
   // 3. 判斷是否顯示 Badge
 
-  const showBadge = hasHydrated && !isLoading && !isError && cartTotalQty > 0;
+  const showBadge = !isLoading && !isError && cartTotalQty > 0;
 
   return (
     <Link
