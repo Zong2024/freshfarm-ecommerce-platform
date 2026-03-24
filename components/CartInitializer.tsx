@@ -4,7 +4,10 @@ import { useEffect } from "react";
 
 import { useDispatch } from "react-redux";
 
-import { hydrateLocalCart } from "@/lib/store/features/cart/cartSlice";
+import {
+  hydrateLocalCart,
+  setCartHydrated,
+} from "@/lib/store/features/cart/cartSlice";
 
 export const CartInitializer = () => {
   const dispatch = useDispatch();
@@ -15,11 +18,16 @@ export const CartInitializer = () => {
         const parsedCart = JSON.parse(savedCart);
         if (parsedCart.length > 0) {
           dispatch(hydrateLocalCart(parsedCart));
+        } else {
+          dispatch(setCartHydrated());
         }
+      } else {
+        dispatch(setCartHydrated());
       }
     } catch (error) {
       console.error("讀取localStorage失敗", error);
       localStorage.removeItem("guestCart");
+      dispatch(setCartHydrated());
     }
   }, [dispatch]);
 

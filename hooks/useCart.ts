@@ -1,3 +1,5 @@
+import Cookies from "js-cookie";
+
 import { CustomToast } from "@/components/CustomToast";
 
 import {
@@ -16,28 +18,32 @@ import {
 
 import { CartProduct, CartProductSchema } from "@/types/product";
 
-import { useIsMounted } from "./useIsMounted";
+import { useHasHydrated } from "./useHasHydrated";
 
 export const useCart = () => {
-  const isMounted = useIsMounted();
-  const { isAuthenticated } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
+  const hasHydrated = useHasHydrated();
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const isCartHydrated = useAppSelector((state) => state.cart.isHydrated);
   const LocalCartItem = useAppSelector((state) => state.cart.items);
-  const [postCart, { isLoading: isPosting }] = usePostCartMutation();
-  const [deleteCart, { isLoading: isDeleting }] = useDeleteCartMutation();
-  const [updateCart, { isLoading: isUpdating }] = useUpdateCartMutation();
+
+  const [postCart] = usePostCartMutation();
+  const [deleteCart] = useDeleteCartMutation();
+  const [updateCart] = useUpdateCartMutation();
   const {
     data: apiCartData,
-    isLoading: isGetting,
+    isLoading,
     isError,
   } = useGetCartQuery(undefined, {
     skip: !isAuthenticated,
   });
+  const hasToken = !!Cookies.get("token");
+  const isAuthPending = hasToken && !isAuthenticated;
+  const isActionLoading = !isCartHydrated || isAuthPending || isLoading;
   const cartItems = isAuthenticated
     ? apiCartData?.data?.carts || []
     : LocalCartItem;
   const cartTotalQty = cartItems.reduce((acc, item) => acc + item.qty, 0);
-
   const addToCart = async (product: CartProduct, qty: number = 1) => {
     try {
       const validatedProduct = CartProductSchema.parse(product);
@@ -90,7 +96,7 @@ export const useCart = () => {
       dispatch(clearLocalCart());
     } catch (error) {}
   };
-  const isActionLoading = isGetting || isPosting || isDeleting || isUpdating;
+
   return {
     addToCart,
     handleDelete,
@@ -100,6 +106,7 @@ export const useCart = () => {
     mergeCart,
     isLoading: isActionLoading,
     isError,
-    isMounted,
+    hasHydrated,
+    isCartHydrated,
   };
 };

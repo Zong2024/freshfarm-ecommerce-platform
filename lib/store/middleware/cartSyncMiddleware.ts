@@ -2,6 +2,7 @@ import { createListenerMiddleware, isAnyOf } from "@reduxjs/toolkit";
 
 import {
   addToLocalCart,
+  clearLocalCart,
   deleteFromLocalCart,
   updateLocalCart,
 } from "../features/cart/cartSlice";
@@ -10,7 +11,12 @@ import { RootState } from "../store";
 export const cartSyncMiddleware = createListenerMiddleware();
 
 cartSyncMiddleware.startListening({
-  matcher: isAnyOf(addToLocalCart, deleteFromLocalCart, updateLocalCart),
+  matcher: isAnyOf(
+    addToLocalCart,
+    deleteFromLocalCart,
+    updateLocalCart,
+    clearLocalCart
+  ),
   effect: (action, listenerApi) => {
     const state = listenerApi.getState() as RootState;
     const CartData = state.cart.items;

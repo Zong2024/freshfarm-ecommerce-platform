@@ -11,12 +11,11 @@ import { CartTable } from "@/components/table/CartTable";
 import { Button } from "@/components/ui/button";
 
 import { useAppSelector } from "@/lib/store/hooks";
-import { useUpdateCartMutation } from "@/lib/store/services/cartApi";
 
 import Loading from "../loading";
 
 export default function CartPage() {
-  const { cartItems, isLoading, handleDelete, handleUpdate, isMounted } =
+  const { cartItems, isLoading, handleDelete, handleUpdate, hasHydrated } =
     useCart();
 
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
@@ -30,8 +29,7 @@ export default function CartPage() {
     }
   };
 
-  if (isLoading) return <Loading />;
-  if (!isMounted) return <Loading />;
+  if (!hasHydrated || isLoading) return <Loading />;
 
   // 處理購物車為空的狀態
   if (!cartItems || cartItems.length === 0) {

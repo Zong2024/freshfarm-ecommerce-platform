@@ -8,11 +8,11 @@ import { ShoppingCart } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function CartBadge() {
-  const { cartTotalQty, isLoading, isError, isMounted } = useCart();
+  const { cartTotalQty, isLoading, isError, hasHydrated } = useCart();
 
   // 3. 判斷是否顯示 Badge
-  if (!isMounted) return null;
-  const showBadge = !isLoading && !isError && cartTotalQty > 0;
+
+  const showBadge = hasHydrated && !isLoading && !isError && cartTotalQty > 0;
 
   return (
     <Link

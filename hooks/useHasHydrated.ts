@@ -2,7 +2,7 @@ import { useSyncExternalStore } from "react";
 
 const emptySubscribe = () => () => {};
 
-export function useIsMounted() {
+export function useHasHydrated() {
   return useSyncExternalStore(
     emptySubscribe,
     () => true,

@@ -5,10 +5,12 @@ import { CartProduct } from "@/types/product";
 
 export interface CartItem {
   items: LocalCartItem[];
+  isHydrated: boolean;
 }
 
 const initialState: CartItem = {
   items: [],
+  isHydrated: false,
 };
 
 const cartSlice = createSlice({
@@ -17,6 +19,10 @@ const cartSlice = createSlice({
   reducers: {
     hydrateLocalCart: (state, action: PayloadAction<LocalCartItem[]>) => {
       state.items = action.payload;
+      state.isHydrated = true;
+    },
+    setCartHydrated: (state) => {
+      state.isHydrated = true;
     },
     addToLocalCart: (
       state,
@@ -71,5 +77,6 @@ export const {
   deleteFromLocalCart,
   updateLocalCart,
   clearLocalCart,
+  setCartHydrated,
 } = cartSlice.actions;
 export default cartSlice.reducer;
