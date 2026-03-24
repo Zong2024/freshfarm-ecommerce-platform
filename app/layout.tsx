@@ -34,6 +34,7 @@ export default function RootLayout({
   return (
     <html lang="zh-TW" suppressHydrationWarning>
       <body
+        suppressHydrationWarning
         className={`${notoSTC.variable} ${lato.variable} text-base antialiased`}
       >
         <StoreProvider>

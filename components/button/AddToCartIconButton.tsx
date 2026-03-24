@@ -8,11 +8,11 @@ import { CartProduct } from "@/types/product";
 
 import { Button } from "../ui/button";
 
-interface AddToCartButtonProps {
+interface AddToCartIconButtonProps {
   product: CartProduct;
 }
 
-export const AddToCartButton = ({ product }: AddToCartButtonProps) => {
+export const AddToCartIconButton = ({ product }: AddToCartIconButtonProps) => {
   const { addToCart, isLoading } = useCart();
   const handleAddToCart = async (qty: number = 1) => {
     addToCart(product, qty);
