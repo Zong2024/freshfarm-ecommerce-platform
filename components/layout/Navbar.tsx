@@ -4,7 +4,8 @@ import { useState } from "react";
 
 import Link from "next/link";
 
-import { LogOut, Menu, ShoppingCart, User } from "lucide-react";
+import { useHasHydrated } from "@/hooks/useHasHydrated";
+import { LogOut, Menu, User } from "lucide-react";
 
 import {
   Sheet,
@@ -21,6 +22,7 @@ import { Button } from "../ui/button";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const hasHydrated = useHasHydrated();
 
   const dispatch = useAppDispatch();
   const isLoggedIn = useAppSelector((state) => state.auth.isAuthenticated);
@@ -61,19 +63,23 @@ export const Navbar = () => {
           <div className="relative">
             <CartBadge />
           </div>
-          {isLoggedIn ? (
-            <div className="flex items-center gap-6 text-[24px] font-bold">
-              <Link href="/orders">
-                <User className="font-bold"></User>
+          {hasHydrated &&
+            (isLoggedIn ? (
+              <div className="flex items-center gap-6 text-[24px] font-bold">
+                <Link href="/orders">
+                  <User className="font-bold"></User>
+                </Link>
+              </div>
+            ) : (
+              <Link href="/signin">
+                <Button
+                  variant="outline"
+                  className="rounded-full px-6 font-bold"
+                >
+                  登入
+                </Button>
               </Link>
-            </div>
-          ) : (
-            <Link href="/signin">
-              <Button variant="outline" className="rounded-full px-6 font-bold">
-                登入
-              </Button>
-            </Link>
-          )}
+            ))}
         </nav>
 
         {/* 行動版選單 (md 以下顯示) */}
@@ -105,31 +111,32 @@ export const Navbar = () => {
                   </Link>
                 ))}
 
-                {isLoggedIn ? (
-                  <>
-                    {AUTH_ITEMS.map((item) => (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        className="text-lg font-medium"
-                        onClick={() => setIsOpen(false)}
+                {hasHydrated &&
+                  (isLoggedIn ? (
+                    <>
+                      {AUTH_ITEMS.map((item) => (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          className="text-lg font-medium"
+                          onClick={() => setIsOpen(false)}
+                        >
+                          {item.label}
+                        </Link>
+                      ))}
+                      <Button
+                        variant="destructive"
+                        onClick={handleLogout}
+                        className="mt-4 w-full"
                       >
-                        {item.label}
-                      </Link>
-                    ))}
-                    <Button
-                      variant="destructive"
-                      onClick={handleLogout}
-                      className="mt-4 w-full"
-                    >
-                      <LogOut className="mr-2 h-4 w-4" /> 登出
-                    </Button>
-                  </>
-                ) : (
-                  <Link href="/signin" onClick={() => setIsOpen(false)}>
-                    <Button className="w-full text-lg">登入 / 註冊</Button>
-                  </Link>
-                )}
+                        <LogOut className="mr-2 h-4 w-4" /> 登出
+                      </Button>
+                    </>
+                  ) : (
+                    <Link href="/signin" onClick={() => setIsOpen(false)}>
+                      <Button className="w-full text-lg">登入 / 註冊</Button>
+                    </Link>
+                  ))}
               </nav>
             </SheetContent>
           </Sheet>

@@ -26,6 +26,14 @@ export const ProductSchema = z.object({
 
 export type Product = z.infer<typeof ProductSchema>;
 
+export const CartProductSchema = ProductSchema.pick({
+  id: true,
+  title: true,
+  price: true,
+  imageUrl: true,
+});
+export type CartProduct = z.infer<typeof CartProductSchema>;
+
 export const GetProductResponseSchema = BaseResponseSchema.extend({
   product: ProductSchema,
 });

@@ -1,6 +1,6 @@
 import z from "zod";
 
-import { ProductSchema } from "./product";
+import { CartProductSchema, ProductSchema } from "./product";
 
 export const CartItemSchema = z.object({
   id: z.string(),
@@ -8,10 +8,18 @@ export const CartItemSchema = z.object({
   qty: z.number(),
   total: z.number(),
   final_total: z.number(),
-  product: ProductSchema,
+  product: CartProductSchema,
 });
-
 export type CartItem = z.infer<typeof CartItemSchema>;
+export const LocalCartItemSchema = z.object({
+  id: z.string(),
+  product_id: z.string(),
+  qty: z.number(),
+  total: z.number(),
+  final_total: z.number(),
+  product: CartProductSchema,
+});
+export type LocalCartItem = z.infer<typeof LocalCartItemSchema>;
 
 export const getCartResponseSchema = z.object({
   success: z.boolean(),
@@ -22,7 +30,6 @@ export const getCartResponseSchema = z.object({
   }),
   message: z.array(z.string()),
 });
-
 export type GetCartResponse = z.infer<typeof getCartResponseSchema>;
 
 export const PostCartRequestSchema = z.object({

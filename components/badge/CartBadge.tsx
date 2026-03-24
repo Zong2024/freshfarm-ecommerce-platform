@@ -1,25 +1,26 @@
 "use client";
 
-import { useMemo } from "react";
-
 import Link from "next/link";
 
+import { useCart } from "@/hooks/useCart";
 import { ShoppingCart } from "lucide-react";
 
-import { useGetCartQuery } from "@/lib/store/services/cartApi";
 import { cn } from "@/lib/utils";
 
 export function CartBadge() {
-  const { data: cartData, isLoading, isError } = useGetCartQuery();
+  const { cartTotalQty, isLoading, isError, hasHydrated } = useCart();
 
-  const totalQty = useMemo(() => {
-    const carts = cartData?.data?.carts;
-    if (!carts) return 0;
-    return carts.reduce((acc, item) => acc + item.qty, 0);
-  }, [cartData]);
+  if (!hasHydrated) {
+    return (
+      <div className="relative inline-flex items-center p-2">
+        <ShoppingCart className="text-foreground/50 h-6 w-6" />
+      </div>
+    );
+  }
 
   // 3. 判斷是否顯示 Badge
-  const showBadge = !isLoading && !isError && totalQty > 0;
+
+  const showBadge = !isLoading && !isError && cartTotalQty > 0;
 
   return (
     <Link
@@ -33,10 +34,10 @@ export function CartBadge() {
         <span
           className={cn(
             "bg-destructive text-destructive-foreground animate-in fade-in zoom-in absolute -top-0.5 -right-0.5 flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-[10px] font-bold duration-300",
-            totalQty > 9 ? "px-1.5" : "w-5"
+            cartTotalQty > 9 ? "px-1.5" : "w-5"
           )}
         >
-          {totalQty > 99 ? "99+" : totalQty}
+          {cartTotalQty > 99 ? "99+" : cartTotalQty}
         </span>
       )}
     </Link>

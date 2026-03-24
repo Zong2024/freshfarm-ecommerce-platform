@@ -1,8 +1,5 @@
-import { CirclePlus, ShoppingCart } from "lucide-react";
-
+import { ProductActionSection } from "@/components/product/ProductActionSection";
 import { ProductGallery } from "@/components/product/ProductGallery";
-import { QuantitySelector } from "@/components/ui/QuantitySelector";
-import { Button } from "@/components/ui/button";
 
 import { getProduct } from "@/lib/services/product";
 
@@ -68,23 +65,8 @@ export default async function ProductDetailPage({ params }: Props) {
             )}
           </div>
 
-          {/* 數量選擇器 (純 UI，保留給您後續實作狀態邏輯) */}
-
-          <QuantitySelector />
-
-          {/* 操作按鈕 */}
-          <div className="flex flex-col gap-4 sm:flex-row">
-            <Button
-              variant="outline"
-              className="w-full rounded-sm bg-gray-100 py-7 text-base font-bold shadow-none sm:flex-[2]"
-            >
-              直接購買
-              <CirclePlus className="h-5 w-5" />
-            </Button>
-            <Button className="rounded-sm py-7 font-bold text-white shadow-none sm:flex-[3]">
-              加入購物車 <ShoppingCart className="h-5 w-5" />
-            </Button>
-          </div>
+          {/* 數量選擇器與操作按鈕 */}
+          <ProductActionSection product={product} />
 
           {/* 運送/付款提示區塊 */}
           <div className="bg-secondary-50 mt-4 rounded-sm border-none px-6 py-4 leading-relaxed">
@@ -102,7 +84,6 @@ export default async function ProductDetailPage({ params }: Props) {
           {product.content && (
             <div className="mt-6 border-t pt-6">
               <h2 className="mb-4 text-xl font-bold">詳細說明</h2>
-              {/* 假設 content 是 HTML 格式 */}
               <div
                 className="prose prose-sm max-w-none text-gray-400"
                 dangerouslySetInnerHTML={{ __html: product.content }}

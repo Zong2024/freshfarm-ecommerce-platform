@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { Product } from "@/types/product";
 
-import { AddToCartButton } from "../button/AddToCartButton";
+import { AddToCartIconButton } from "../button/AddToCartIconButton";
 
 interface ProductCardProps {
   product: Product;
@@ -56,7 +56,7 @@ export function ProductCard({ product }: ProductCardProps) {
               </span>
             )}
           </div>
-          <AddToCartButton productId={id} />
+          <AddToCartIconButton product={product} />
         </div>
       </div>
     </div>
