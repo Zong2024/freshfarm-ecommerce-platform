@@ -69,7 +69,7 @@ export const CartTable = ({
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="hover:text-destructive text-gray-400"
+                  className="hover:text-destructive text-danger"
                   aria-label="移除商品"
                   onClick={() => onDelete(item.id)}
                 >

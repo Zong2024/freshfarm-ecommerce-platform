@@ -69,7 +69,7 @@ export const CartCard = ({
               <Button
                 variant="ghost"
                 size="icon"
-                className="hover:text-destructive -me-2 -mt-1 h-8 w-8 text-gray-400"
+                className="hover:text-destructive text-danger -me-2 -mt-1 h-8 w-8"
                 aria-label="移除商品"
                 onClick={() => onDelete(item.id)}
               >

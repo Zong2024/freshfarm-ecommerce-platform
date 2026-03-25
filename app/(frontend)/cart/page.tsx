@@ -71,6 +71,7 @@ export default function CartPage() {
           variant="default"
           className="w-full text-white md:w-1/3"
           onClick={handleCheckoutRedirect}
+          size="lg"
         >
           前往付款
           <MoveRight />

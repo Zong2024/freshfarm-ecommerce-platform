@@ -27,7 +27,7 @@ export function ProductCard({ product }: ProductCardProps) {
         />
 
         {price < origin_price && (
-          <div className="absolute top-2 left-2 rounded-full bg-red-500 px-2 py-1 text-xs font-bold text-white">
+          <div className="bg-danger absolute top-2 left-2 rounded-full px-2 py-1 text-xs font-bold text-white">
             特價
           </div>
         )}
