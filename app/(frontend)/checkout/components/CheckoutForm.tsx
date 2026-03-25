@@ -86,7 +86,7 @@ export const CheckoutForm = ({ form }: CheckoutFormProps) => {
           {/* 手機號碼 */}
           <FormField
             control={form.control}
-            name="phone"
+            name="tel"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>手機號碼</FormLabel>

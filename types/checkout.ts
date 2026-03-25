@@ -6,7 +6,7 @@ export const checkoutSchema = z
       error: "請選擇配送方式",
     }),
     receiverName: z.string().trim().min(2, "姓名至少 2 個字"),
-    phone: z
+    tel: z
       .string()
       .trim()
       .regex(/^09\d{8}$/, "手機格式不正確"),
@@ -19,3 +19,15 @@ export const checkoutSchema = z
   .readonly();
 
 export type CheckoutFormValues = z.infer<typeof checkoutSchema>;
+
+export const PostOrderRequestSchema = z.object({
+  data: z.object({
+    user: z.object({
+      name: z.string(),
+      email: z.string().email(),
+      tel: z.string(),
+      address: z.string(),
+    }),
+    message: z.string().optional(),
+  }),
+});

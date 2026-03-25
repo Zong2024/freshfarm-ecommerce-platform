@@ -18,7 +18,7 @@ export default function Checkout() {
     resolver: zodResolver(checkoutSchema),
     defaultValues: {
       receiverName: "",
-      phone: "",
+      tel: "",
       email: "",
       address: "",
       city: "",
