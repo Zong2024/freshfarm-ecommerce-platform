@@ -126,7 +126,7 @@
   --white: #fafafa;
   --black: #494949;
 
-  --radius: 0.625rem;
+  --radius: 1rem;
   --foreground: var(--black);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
