@@ -2,10 +2,9 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { MoveRight } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 
 import { ActionFullButton } from "@/components/button/ActionFullButton";
-import { AddToCartFullButton } from "@/components/button/AddToCartFullButton";
 import {
   Form,
   FormControl,
@@ -23,6 +22,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
+import { taiwanRegions } from "@/lib/taiwan-regions";
 
 import { CheckoutFormValues, checkoutSchema } from "@/types/checkout";
 
@@ -44,6 +45,14 @@ export default function Checkout() {
   const onSubmit = (data: CheckoutFormValues) => {
     console.log(data);
   };
+
+  const selectedCity = useWatch({
+    control: form.control,
+    name: "city",
+  });
+  const availableDistricts =
+    taiwanRegions.find((r) => r.city === selectedCity)?.districts || [];
+
   return (
     <div className="container mx-auto px-3 py-12">
       <div className="grid grid-cols-1 gap-6 md:grid-cols-12">
@@ -143,8 +152,15 @@ export default function Checkout() {
                     render={({ field }) => (
                       <FormItem>
                         <Select
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
+                          onValueChange={(val) => {
+                            field.onChange(val);
+                            form.setValue("district", "");
+                            form.setValue("zipCode", "");
+                          }}
+                          onOpenChange={(open) => {
+                            if (!open) field.onBlur();
+                          }}
+                          value={field.value}
                         >
                           <FormControl>
                             <SelectTrigger className="w-full">
@@ -152,7 +168,11 @@ export default function Checkout() {
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            <SelectItem value="taipei">台北</SelectItem>
+                            {taiwanRegions.map((region) => (
+                              <SelectItem key={region.city} value={region.city}>
+                                {region.city}
+                              </SelectItem>
+                            ))}
                           </SelectContent>
                         </Select>
                         <FormMessage />
@@ -165,8 +185,18 @@ export default function Checkout() {
                     render={({ field }) => (
                       <FormItem>
                         <Select
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
+                          onValueChange={(val) => {
+                            field.onChange(val);
+                            const zip =
+                              availableDistricts.find((d) => d.name === val)
+                                ?.zip || "";
+                            form.setValue("zipCode", zip);
+                          }}
+                          onOpenChange={(open) => {
+                            if (!open) field.onBlur();
+                          }}
+                          value={field.value}
+                          disabled={!selectedCity}
                         >
                           <FormControl>
                             <SelectTrigger className="w-full">
@@ -174,7 +204,14 @@ export default function Checkout() {
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            <SelectItem value="大安區">大安區</SelectItem>
+                            {availableDistricts.map((district) => (
+                              <SelectItem
+                                key={district.name}
+                                value={district.name}
+                              >
+                                {district.name}
+                              </SelectItem>
+                            ))}
                           </SelectContent>
                         </Select>
                         <FormMessage />
