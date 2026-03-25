@@ -44,7 +44,7 @@ export const CartTable = ({
                       sizes="80px"
                     />
                   </div>
-                  <span className="line-clamp-2 text-base font-bold text-gray-800">
+                  <span className="line-clamp-2 text-base text-gray-400">
                     {item.product.title}
                   </span>
                 </div>

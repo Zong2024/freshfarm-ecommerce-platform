@@ -1,13 +1,11 @@
 "use client";
 
 import { useCart } from "@/hooks/useCart";
-import { Loader2, ShoppingCart } from "lucide-react";
-
-import { cn } from "@/lib/utils";
+import { ShoppingCart } from "lucide-react";
 
 import { CartProduct } from "@/types/product";
 
-import { Button } from "../ui/button";
+import { ActionFullButton } from "./ActionFullButton";
 
 interface AddToCartFullButtonProps {
   product: CartProduct;
@@ -27,22 +25,12 @@ export const AddToCartFullButton = ({
   };
 
   return (
-    <Button
-      className={cn(
-        "rounded-sm py-7 font-bold text-white shadow-none",
-        isLoading && "cursor-not-allowed opacity-70",
-        className
-      )}
+    <ActionFullButton
+      className={className}
       onClick={handleAddToCart}
-      disabled={isLoading}
+      isLoading={isLoading}
     >
-      {isLoading ? (
-        <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-      ) : (
-        <>
-          加入購物車 <ShoppingCart className="ml-2 h-5 w-5" />
-        </>
-      )}
-    </Button>
+      加入購物車 <ShoppingCart className="ml-2 h-5 w-5" />
+    </ActionFullButton>
   );
 };

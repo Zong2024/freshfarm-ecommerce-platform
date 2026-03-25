@@ -1,8 +1,10 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { MoveRight } from "lucide-react";
 import { useForm } from "react-hook-form";
 
+import { ActionFullButton } from "@/components/button/ActionFullButton";
 import { AddToCartFullButton } from "@/components/button/AddToCartFullButton";
 import {
   Form,
@@ -234,6 +236,10 @@ export default function Checkout() {
               <p>總金額</p>
               <p className="text-secondary-300 text-3xl font-bold">NT$ 2,008</p>
             </div>
+            <ActionFullButton className="h-13">
+              前往付款
+              <MoveRight />
+            </ActionFullButton>
           </section>
         </div>
       </div>
