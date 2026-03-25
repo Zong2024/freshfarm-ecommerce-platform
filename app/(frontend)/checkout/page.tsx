@@ -1,33 +1,19 @@
 "use client";
 
+import { useCart } from "@/hooks/useCart";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { MoveRight } from "lucide-react";
 import { useForm, useWatch } from "react-hook-form";
 
-import { ActionFullButton } from "@/components/button/ActionFullButton";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-
-import { taiwanRegions } from "@/lib/taiwan-regions";
+import { Form } from "@/components/ui/form";
 
 import { CheckoutFormValues, checkoutSchema } from "@/types/checkout";
 
+import { CheckoutCartAccordion } from "./components/CheckoutCartAccordion";
+import { CheckoutForm } from "./components/CheckoutForm";
+import { CheckoutPay } from "./components/CheckoutPay";
+
 export default function Checkout() {
+  const { cartItems } = useCart();
   const form = useForm<CheckoutFormValues>({
     resolver: zodResolver(checkoutSchema),
     defaultValues: {
@@ -46,240 +32,37 @@ export default function Checkout() {
     console.log(data);
   };
 
-  const selectedCity = useWatch({
+  const shippingMethod = useWatch({
     control: form.control,
-    name: "city",
+    name: "shippingMethod",
   });
-  const availableDistricts =
-    taiwanRegions.find((r) => r.city === selectedCity)?.districts || [];
+
+  const itemsTotal =
+    cartItems?.reduce((acc, item) => acc + (item.total || 0), 0) || 0;
+  const shippingFee =
+    shippingMethod === "pickup" ? 0 : itemsTotal >= 1000 ? 0 : 150;
+  const finalTotal = itemsTotal + shippingFee;
 
   return (
     <div className="container mx-auto px-3 py-12">
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-12">
-        <div className="md:col-span-7">
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="flex flex-col gap-6"
-            >
-              <section className="rounded-lg bg-gray-50 p-6">
-                {/* 配送方式 */}
-                <h4 className="text-primary-400 mb-4 text-2xl font-bold">
-                  配送方式
-                </h4>
-                <FormField
-                  control={form.control}
-                  name="shippingMethod"
-                  render={({ field }) => (
-                    <RadioGroup
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                      className=""
-                    >
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="cold" id="cold" />
-                        <label htmlFor="cold">
-                          低溫宅配 (運費NT$150，消費滿NT$1,000免運費)
-                        </label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="pickup" id="pickup" />
-                        <label htmlFor="pickup">到店取貨</label>
-                      </div>
-                    </RadioGroup>
-                  )}
-                />
-              </section>
-              {/* 收件資訊 */}
-              <section className="flex flex-col gap-4 rounded-lg bg-gray-50 p-6">
-                <h4 className="text-primary-400 text-2xl font-bold">
-                  收件資訊
-                </h4>
+      <CheckoutCartAccordion />
 
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                  {/* 收件人姓名 */}
-                  <FormField
-                    control={form.control}
-                    name="receiverName"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>收件人姓名</FormLabel>
-                        <FormControl>
-                          <Input placeholder="王Ｏ明" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  {/* 手機號碼 */}
-                  <FormField
-                    control={form.control}
-                    name="phone"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>手機號碼</FormLabel>
-                        <FormControl>
-                          <Input placeholder="0912345678" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-
-                {/* 信箱 */}
-                <div>
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>電子郵件</FormLabel>
-                        <FormControl>
-                          <Input placeholder="aaa@gmail.com" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-
-                {/* 地址 */}
-                <div className="grid grid-cols-2 gap-2">
-                  <FormField
-                    control={form.control}
-                    name="city"
-                    render={({ field }) => (
-                      <FormItem>
-                        <Select
-                          onValueChange={(val) => {
-                            field.onChange(val);
-                            form.setValue("district", "");
-                            form.setValue("zipCode", "");
-                          }}
-                          onOpenChange={(open) => {
-                            if (!open) field.onBlur();
-                          }}
-                          value={field.value}
-                        >
-                          <FormControl>
-                            <SelectTrigger className="w-full">
-                              <SelectValue placeholder="請選擇縣市" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            {taiwanRegions.map((region) => (
-                              <SelectItem key={region.city} value={region.city}>
-                                {region.city}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="district"
-                    render={({ field }) => (
-                      <FormItem>
-                        <Select
-                          onValueChange={(val) => {
-                            field.onChange(val);
-                            const zip =
-                              availableDistricts.find((d) => d.name === val)
-                                ?.zip || "";
-                            form.setValue("zipCode", zip);
-                          }}
-                          onOpenChange={(open) => {
-                            if (!open) field.onBlur();
-                          }}
-                          value={field.value}
-                          disabled={!selectedCity}
-                        >
-                          <FormControl>
-                            <SelectTrigger className="w-full">
-                              <SelectValue placeholder="請選擇區域" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            {availableDistricts.map((district) => (
-                              <SelectItem
-                                key={district.name}
-                                value={district.name}
-                              >
-                                {district.name}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <div>
-                  <FormField
-                    control={form.control}
-                    name="address"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <Input placeholder="詳細地址" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                {/* 郵遞區號 */}
-                <div>
-                  <FormField
-                    control={form.control}
-                    name="zipCode"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>郵遞區號</FormLabel>
-                        <FormControl>
-                          <Input placeholder="106" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-              </section>
-            </form>
-          </Form>
-        </div>
-        <div className="md:col-span-5">
-          <section className="flex flex-col gap-4 rounded-lg bg-gray-50 p-6">
-            <h4 className="text-primary-400 text-2xl font-bold">付款金額</h4>
-            <div className="flex flex-col gap-2">
-              <div className="flex justify-between">
-                <p>商品金額</p>
-                <p className="font-bold">NT$ 2,058</p>
-              </div>
-              <div className="flex justify-between">
-                <p>運費</p>
-                <p className="font-bold">NT$ 100</p>
-              </div>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-12">
+            <div className="md:col-span-7">
+              <CheckoutForm form={form} />
             </div>
-
-            <div className="border-t border-gray-300" />
-
-            <div className="flex items-center justify-between">
-              <p>總金額</p>
-              <p className="text-secondary-300 text-3xl font-bold">NT$ 2,008</p>
+            <div className="md:col-span-5">
+              <CheckoutPay
+                itemsTotal={itemsTotal}
+                shippingFee={shippingFee}
+                finalTotal={finalTotal}
+              />
             </div>
-            <ActionFullButton className="h-13">
-              前往付款
-              <MoveRight />
-            </ActionFullButton>
-          </section>
-        </div>
-      </div>
+          </div>
+        </form>
+      </Form>
     </div>
   );
 }
