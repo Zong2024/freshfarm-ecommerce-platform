@@ -9,6 +9,8 @@ import { useForm, useWatch } from "react-hook-form";
 import { CustomToast } from "@/components/CustomToast";
 import { Form } from "@/components/ui/form";
 
+import { clearLocalCart } from "@/lib/store/features/cart/cartSlice";
+import { useAppDispatch } from "@/lib/store/hooks";
 import { usePostOrderMutation } from "@/lib/store/services/orderApi";
 
 import {
@@ -39,6 +41,7 @@ export default function Checkout() {
   });
   const [postOrder, { isLoading }] = usePostOrderMutation();
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const onSubmit = async (data: CheckoutFormValues) => {
     const { receiverName, tel, email, address, city, district, zipCode } = data;
@@ -57,8 +60,9 @@ export default function Checkout() {
       console.log(data);
       await postOrder(orderRequest).unwrap();
       CustomToast("success", "訂單已提交");
+      dispatch(clearLocalCart());
       form.reset();
-      router.push("/");
+      router.push(`/checkout/payment?total=${finalTotal}`);
     } catch (error) {
       CustomToast("warning", "訂單發生問題 稍後再試");
     }
