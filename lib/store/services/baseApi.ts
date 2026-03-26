@@ -58,6 +58,6 @@ const dynamicBaseQuery: BaseQueryFn<
 export const baseApi = createApi({
   reducerPath: "api",
   baseQuery: dynamicBaseQuery,
-  tagTypes: ["Product", "Cart"],
+  tagTypes: ["Product", "Cart", "Auth", "Order"],
   endpoints: () => ({}),
 });

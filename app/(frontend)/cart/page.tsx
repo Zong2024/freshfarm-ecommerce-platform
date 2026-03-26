@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useCart } from "@/hooks/useCart";
 import { MoveRight, ShoppingBag } from "lucide-react";
 
+import { ActionFullButton } from "@/components/button/ActionFullButton";
 import { CartCard } from "@/components/card/CartCard";
 import { CartTable } from "@/components/table/CartTable";
 import { Button } from "@/components/ui/button";
@@ -67,14 +68,13 @@ export default function CartPage() {
         onDelete={handleDelete}
       />
       <div className="flex justify-end py-5">
-        <Button
-          variant="default"
-          className="w-full text-white md:w-1/3"
+        <ActionFullButton
+          className="h-13 md:w-1/3"
           onClick={handleCheckoutRedirect}
         >
           前往付款
           <MoveRight />
-        </Button>
+        </ActionFullButton>
       </div>
     </div>
   );

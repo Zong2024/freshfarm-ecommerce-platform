@@ -44,7 +44,7 @@ export const CartTable = ({
                       sizes="80px"
                     />
                   </div>
-                  <span className="line-clamp-2 text-base font-bold text-gray-800">
+                  <span className="line-clamp-2 text-base text-gray-400">
                     {item.product.title}
                   </span>
                 </div>
@@ -69,7 +69,7 @@ export const CartTable = ({
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="hover:text-destructive text-gray-400"
+                  className="hover:text-destructive text-danger"
                   aria-label="移除商品"
                   onClick={() => onDelete(item.id)}
                 >

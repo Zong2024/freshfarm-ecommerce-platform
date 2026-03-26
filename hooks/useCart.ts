@@ -43,7 +43,10 @@ export const useCart = () => {
   const cartItems = isAuthenticated
     ? apiCartData?.data?.carts || []
     : LocalCartItem;
-  const cartTotalQty = cartItems.reduce((acc, item) => acc + item.qty, 0);
+  const cartTotalQty = cartItems.reduce(
+    (acc: number, item) => acc + item.qty,
+    0
+  );
   const addToCart = async (product: CartProduct, qty: number = 1) => {
     try {
       const validatedProduct = CartProductSchema.parse(product);
