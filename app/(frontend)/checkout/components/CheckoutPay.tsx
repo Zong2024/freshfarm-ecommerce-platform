@@ -8,12 +8,14 @@ interface CheckoutPayProps {
   itemsTotal: number;
   shippingFee: number;
   finalTotal: number;
+  isLoading?: boolean;
 }
 
 export const CheckoutPay = ({
   itemsTotal,
   shippingFee,
   finalTotal,
+  isLoading,
 }: CheckoutPayProps) => {
   return (
     <section className="flex flex-col gap-4 rounded-lg bg-gray-50 p-6">
@@ -26,7 +28,7 @@ export const CheckoutPay = ({
         <div className="flex justify-between">
           <p>運費</p>
           <p className="font-bold">
-            {shippingFee === 0 ? "免費" : `NT$ ${shippingFee}`}
+            {shippingFee === 0 ? "免運" : `NT$ ${shippingFee}`}
           </p>
         </div>
       </div>
@@ -39,7 +41,7 @@ export const CheckoutPay = ({
           NT$ {finalTotal}
         </p>
       </div>
-      <ActionFullButton className="h-13" type="submit">
+      <ActionFullButton className="h-13" type="submit" disabled={isLoading}>
         前往付款
         <MoveRight />
       </ActionFullButton>

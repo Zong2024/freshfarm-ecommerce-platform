@@ -31,3 +31,5 @@ export const PostOrderRequestSchema = z.object({
     message: z.string().optional(),
   }),
 });
+
+export type PostOrderRequest = z.infer<typeof PostOrderRequestSchema>;

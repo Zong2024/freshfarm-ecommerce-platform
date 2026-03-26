@@ -1,12 +1,21 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
 import { useCart } from "@/hooks/useCart";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, useWatch } from "react-hook-form";
 
+import { CustomToast } from "@/components/CustomToast";
 import { Form } from "@/components/ui/form";
 
-import { CheckoutFormValues, checkoutSchema } from "@/types/checkout";
+import { usePostOrderMutation } from "@/lib/store/services/orderApi";
+
+import {
+  CheckoutFormValues,
+  PostOrderRequest,
+  checkoutSchema,
+} from "@/types/checkout";
 
 import { CheckoutCartAccordion } from "./components/CheckoutCartAccordion";
 import { CheckoutForm } from "./components/CheckoutForm";
@@ -28,8 +37,31 @@ export default function Checkout() {
     },
     mode: "onBlur",
   });
-  const onSubmit = (data: CheckoutFormValues) => {
-    console.log(data);
+  const [postOrder, { isLoading }] = usePostOrderMutation();
+  const router = useRouter();
+
+  const onSubmit = async (data: CheckoutFormValues) => {
+    const { receiverName, tel, email, address, city, district, zipCode } = data;
+    const orderRequest: PostOrderRequest = {
+      data: {
+        user: {
+          name: receiverName,
+          tel,
+          email,
+          address: `${city}${district}${address}${zipCode || ""}`,
+        },
+        message: "",
+      },
+    };
+    try {
+      console.log(data);
+      await postOrder(orderRequest).unwrap();
+      CustomToast("success", "訂單已提交");
+      form.reset();
+      router.push("/");
+    } catch (error) {
+      CustomToast("warning", "訂單發生問題 稍後再試");
+    }
   };
 
   const shippingMethod = useWatch({
@@ -58,6 +90,7 @@ export default function Checkout() {
                 itemsTotal={itemsTotal}
                 shippingFee={shippingFee}
                 finalTotal={finalTotal}
+                isLoading={isLoading}
               />
             </div>
           </div>
