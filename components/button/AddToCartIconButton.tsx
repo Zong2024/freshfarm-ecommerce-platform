@@ -13,22 +13,23 @@ interface AddToCartIconButtonProps {
 }
 
 export const AddToCartIconButton = ({ product }: AddToCartIconButtonProps) => {
-  const { addToCart, isLoading } = useCart();
+  const { addToCart, isLoading, hasHydrated } = useCart();
   const handleAddToCart = async (qty: number = 1) => {
     addToCart(product, qty);
   };
+  const showLoading = hasHydrated ? isLoading : false;
   return (
     <Button
       size="icon"
       className={cn(
         "bg-primary-100 hover:bg-primary-300 rounded-full",
-        isLoading && "cursor-not-allowed opacity-70"
+        showLoading && "cursor-not-allowed opacity-70"
       )}
       title="加入購物車"
       onClick={() => handleAddToCart(1)}
-      disabled={isLoading}
+      disabled={showLoading}
     >
-      {isLoading ? (
+      {showLoading ? (
         <Loader2 className="h-4 w-4 animate-spin" />
       ) : (
         <ShoppingCart className="h-4 w-4" />
