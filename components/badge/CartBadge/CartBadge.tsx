@@ -7,25 +7,28 @@ import { ShoppingCart } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
-export function CartBadge() {
+import { CartBadgeProps } from "./CartBadge.types";
+
+export const CartBadge = ({ className }: CartBadgeProps) => {
   const { cartTotalQty, isLoading, isError, hasHydrated } = useCart();
 
   if (!hasHydrated) {
     return (
-      <div className="relative inline-flex items-center p-2">
+      <div className={cn("relative inline-flex items-center p-2", className)}>
         <ShoppingCart className="text-foreground/50 h-6 w-6" />
       </div>
     );
   }
-
-  // 3. 判斷是否顯示 Badge
 
   const showBadge = !isLoading && !isError && cartTotalQty > 0;
 
   return (
     <Link
       href="/cart"
-      className="hover:text-primary relative inline-flex items-center p-2 transition-colors"
+      className={cn(
+        "hover:text-primary relative inline-flex items-center p-2 transition-colors",
+        className
+      )}
       aria-label="View Shopping Cart"
     >
       <ShoppingCart className="h-6 w-6" />
@@ -42,4 +45,4 @@ export function CartBadge() {
       )}
     </Link>
   );
-}
+};
