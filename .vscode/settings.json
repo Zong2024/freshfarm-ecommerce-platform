@@ -4,5 +4,6 @@
       "fileMatch": ["/components.json"],
       "url": "https://ui.shadcn.com/schema.json"
     }
-  ]
+  ],
+  "cSpell.words": ["Topbar"]
 }
