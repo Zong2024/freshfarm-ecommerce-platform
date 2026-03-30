@@ -11,6 +11,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
+import { CATEGORY_DATA } from "@/lib/constants";
 import { getAllProducts, getProducts } from "@/lib/services/product";
 
 import { Product } from "@/types/product";
@@ -23,49 +24,20 @@ export default async function ProductsPage({
   searchParams,
 }: SearchParamsProps) {
   const params = await searchParams;
-  const currentPage = Number(params.page) || 1;
+  const currentPage = Math.max(1, Number(params.page) || 1);
   const q = typeof params.q === "string" ? params.q : "";
 
-  let products: Product[] = [];
-  let totalPages = 1;
+  const { products: allData } = await getAllProducts();
 
-  if (q) {
-    const data = await getAllProducts();
-    const allEnabledProducts = data.products.filter(
-      (p) =>
-        p.is_enabled === 1 && p.title.toLowerCase().includes(q.toLowerCase())
-    );
-
-    const ITEMS_PER_PAGE = 10;
-    totalPages = Math.ceil(allEnabledProducts.length / ITEMS_PER_PAGE) || 1;
-    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    products = allEnabledProducts.slice(
-      startIndex,
-      startIndex + ITEMS_PER_PAGE
-    );
-  } else {
-    const data = await getProducts(currentPage);
-    products = data.products.filter((p) => p.is_enabled === 1);
-    totalPages = data.pagination?.total_pages || 1;
-  }
-
-  const CATEGORY_DATA = [
-    {
-      id: "origin",
-      title: "產地",
-      items: ["北部", "中部", "南部", "東部", "離島"],
-    },
-    {
-      id: "season",
-      title: "季節",
-      items: ["春季", "夏季", "秋季", "冬季"],
-    },
-    {
-      id: "organic",
-      title: "有機認證",
-      items: ["有機標章", "無農藥殘留"],
-    },
-  ];
+  const filteredProducts = allData.filter(
+    (product) =>
+      product.is_enabled === 1 &&
+      product.title.toLowerCase().includes(q.toLowerCase())
+  );
+  const totalProduct = filteredProducts.length;
+  const totalPages = Math.ceil(totalProduct / 10) || 1;
+  const startIndex = (currentPage - 1) * 10;
+  const products = filteredProducts.slice(startIndex, startIndex + 10);
 
   return (
     <div className="container mx-auto px-1 py-8">
@@ -82,10 +54,7 @@ export default async function ProductsPage({
                   <ChevronDown className="size-4 text-black" />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent
-                className="border-primary-200 w-(--radix-popover-trigger-width) rounded-xl bg-white p-4 shadow-xl"
-                align="start"
-              >
+              <PopoverContent className="border-primary-200 w-[calc(100vw-1rem)] rounded-lg bg-white p-4 shadow-xl">
                 {/* 所有產品 - 獨立按鈕 */}
                 <div className="px-1">所有產品</div>
                 <CategoryAccordion CategoryData={CATEGORY_DATA} />
