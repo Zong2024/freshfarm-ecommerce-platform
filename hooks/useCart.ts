@@ -40,9 +40,7 @@ export const useCart = () => {
   const hasToken = !!Cookies.get("token");
   const isAuthPending = hasToken && !isAuthenticated;
   const isActionLoading = !isCartHydrated || isAuthPending || isLoading;
-  const cartItems = isAuthenticated
-    ? apiCartData?.data?.carts || []
-    : LocalCartItem;
+  const cartItems = isAuthenticated ? apiCartData?.carts || [] : LocalCartItem;
   const cartTotalQty = cartItems.reduce(
     (acc: number, item) => acc + item.qty,
     0
