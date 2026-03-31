@@ -4,7 +4,7 @@ import { Trash2 } from "lucide-react";
 
 import { CartItem } from "@/types/cart";
 
-import { QuantitySelector } from "../ui/QuantitySelector";
+import { QuantitySelector } from "../common/QuantitySelector";
 import { Button } from "../ui/button";
 
 interface CartTableProps {
