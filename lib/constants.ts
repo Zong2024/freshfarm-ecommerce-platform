@@ -5,15 +5,15 @@ export const CATEGORY_DATA = [
     items: ["北部", "中部", "南部", "東部", "離島"],
   },
   {
-    id: "season",
-    title: "季節",
-    items: ["春季", "夏季", "秋季", "冬季"],
+    id: "type",
+    title: "品項",
+    items: ["蔬菜", "水果", "水產", "其他"],
   },
-  {
-    id: "organic",
-    title: "有機認證",
-    items: ["有機標章", "無農藥殘留"],
-  },
+  // {
+  //   id: "organic",
+  //   title: "有機認證",
+  //   items: ["有機標章", "無農藥殘留"],
+  // },
 ];
 
 export const HOME_CATEGORY_SECTIONS = [

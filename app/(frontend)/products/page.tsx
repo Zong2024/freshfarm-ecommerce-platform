@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { ChevronDown } from "lucide-react";
 
 import { CategoryAccordion } from "@/components/CategoryAccordion";
@@ -12,9 +14,8 @@ import {
 } from "@/components/ui/popover";
 
 import { CATEGORY_DATA } from "@/lib/constants";
-import { getAllProducts, getProducts } from "@/lib/services/product";
-
-import { Product } from "@/types/product";
+import { getAllProducts } from "@/lib/services/product";
+import { getRegion } from "@/lib/utils";
 
 type SearchParamsProps = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -24,20 +25,59 @@ export default async function ProductsPage({
   searchParams,
 }: SearchParamsProps) {
   const params = await searchParams;
+  const getStringParam = (param: string | string[] | undefined) =>
+    typeof param === "string" ? param : "";
+  const q = getStringParam(params.q);
+  const origin = getStringParam(params.origin);
+  const type = getStringParam(params.type);
+
   const currentPage = Math.max(1, Number(params.page) || 1);
-  const q = typeof params.q === "string" ? params.q : "";
 
   const { products: allData } = await getAllProducts();
 
-  const filteredProducts = allData.filter(
-    (product) =>
-      product.is_enabled === 1 &&
-      product.title.toLowerCase().includes(q.toLowerCase())
-  );
+  const filteredProducts = allData.filter((product) => {
+    // 啟用狀態與關鍵字搜尋
+    const isEnabled = product.is_enabled === 1;
+    const matchesQuery = product.title.toLowerCase().includes(q.toLowerCase());
+
+    if (!isEnabled || !matchesQuery) return false;
+
+    // 產地過濾
+    if (origin) {
+      const productRegion = getRegion(product.origin || "");
+      if (productRegion !== origin) return false;
+    }
+
+    // 品項過濾
+    if (type) {
+      switch (type) {
+        case "蔬菜":
+          if (product.category !== "蔬菜") return false;
+          break;
+        case "水果":
+          if (product.category !== "水果") return false;
+          break;
+        case "水產":
+          if (product.category !== "水產") return false;
+          break;
+        case "其他":
+          if (["蔬菜", "水果", "水產"].includes(product.category)) return false;
+          break;
+        default:
+          break;
+      }
+    }
+
+    return true;
+  });
+
   const totalProduct = filteredProducts.length;
   const totalPages = Math.ceil(totalProduct / 10) || 1;
   const startIndex = (currentPage - 1) * 10;
   const products = filteredProducts.slice(startIndex, startIndex + 10);
+
+  // 用於清除過濾器的 URL
+  const allProductsUrl = q ? `/products?q=${q}` : "/products";
 
   return (
     <div className="container mx-auto px-1 py-8">
@@ -55,16 +95,23 @@ export default async function ProductsPage({
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="border-primary-200 w-[calc(100vw-1rem)] rounded-lg bg-white p-4 shadow-xl">
-                {/* 所有產品 - 獨立按鈕 */}
-                <div className="px-1">所有產品</div>
+                <Link
+                  href={allProductsUrl}
+                  className="block px-1 py-2 hover:font-bold"
+                >
+                  所有產品
+                </Link>
                 <CategoryAccordion CategoryData={CATEGORY_DATA} />
               </PopoverContent>
             </Popover>
           </div>
           <div className="hidden md:block">
-            <div className="text-primary-300 border-primary-200 mb-2 cursor-pointer border-t border-b py-4 text-xl font-bold">
+            <Link
+              href={allProductsUrl}
+              className="text-primary-300 border-primary-200 hover:text-primary-400 mb-2 block border-t border-b py-4 text-xl font-bold"
+            >
               所有商品
-            </div>
+            </Link>
             <CategoryAccordion CategoryData={CATEGORY_DATA} />
           </div>
         </aside>
@@ -73,6 +120,19 @@ export default async function ProductsPage({
           <div className="mb-6 w-full">
             <SearchBar />
           </div>
+
+          {(origin || type) && (
+            <div className="mb-4 flex flex-wrap gap-2">
+              {[origin, type].filter(Boolean).map((filter) => (
+                <span
+                  key={filter}
+                  className="bg-primary-100 text-primary-400 rounded-full px-3 py-1 text-sm font-medium"
+                >
+                  {filter}
+                </span>
+              ))}
+            </div>
+          )}
 
           {products.length === 0 ? (
             <div className="py-12 text-center text-gray-500">
