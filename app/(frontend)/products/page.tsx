@@ -2,7 +2,7 @@ import { ChevronDown } from "lucide-react";
 
 import { CategoryAccordion } from "@/components/CategoryAccordion";
 import { CustomPagination } from "@/components/CustomPagination";
-import { SearchBar } from "@/components/SearchBar";
+import { SearchBar } from "@/components/common/SearchBar";
 import { ProductCard } from "@/components/product/ProductCard";
 import { Button } from "@/components/ui/button";
 import {

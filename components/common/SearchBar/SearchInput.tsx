@@ -4,9 +4,13 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { Search } from "lucide-react";
 
-import { Input } from "../ui/input";
+import { Input } from "../../ui/input";
+import { SearchBarProps } from "./SearchBar.types";
 
-export default function SearchInput() {
+export const SearchInput = ({
+  placeholder = "搜尋產品...",
+  className,
+}: SearchBarProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -23,19 +27,21 @@ export default function SearchInput() {
     }
     router.push(`${pathname}?${params.toString()}`);
   };
+
   return (
     <form action={handleSearch} className="relative mb-6 w-full max-w-2xl">
       <div className="relative">
         <Input
           name="q"
           type="text"
-          placeholder="搜尋產品..."
+          placeholder={placeholder}
           defaultValue={defaultQuery}
           key={defaultQuery}
+          aria-label="搜尋產品"
           className="focus:border-primary-400 h-12 w-full rounded-md border-gray-200 bg-white shadow-sm"
         />
         <Search className="text-primary-400 absolute top-1/2 right-3 h-5 w-5 -translate-y-1/2" />
       </div>
     </form>
   );
-}
+};

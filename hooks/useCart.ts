@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 
-import { CustomToast } from "@/components/CustomToast";
+import { CustomToast } from "@/components/common/CustomToast";
 
 import {
   addToLocalCart,

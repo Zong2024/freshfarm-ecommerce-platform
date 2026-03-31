@@ -1,8 +1,4 @@
-interface SectionHeaderProps {
-  badge: string;
-  title: string;
-  subtitle: string;
-}
+import { SectionHeaderProps } from "./SectionHeader.types";
 
 export const SectionHeader = ({
   badge,

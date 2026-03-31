@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 import { CartItem } from "@/types/cart";
 
-import { QuantitySelector } from "../ui/QuantitySelector";
+import { QuantitySelector } from "../QuantitySelector";
 import { Button } from "../ui/button";
 
 interface CartCardProps {
