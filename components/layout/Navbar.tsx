@@ -5,6 +5,7 @@ import { useState } from "react";
 import Link from "next/link";
 
 import { useHasHydrated } from "@/hooks/useHasHydrated";
+import { useLogout } from "@/hooks/useLogout";
 import { LogOut, Menu, User } from "lucide-react";
 
 import {
@@ -14,13 +15,13 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
-import { logout } from "@/lib/store/features/auth/authSlice";
-import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
+import { useAppSelector } from "@/lib/store/hooks";
 import { cn } from "@/lib/utils";
 
 import { CartBadge } from "../badge/CartBadge";
 import { Button } from "../ui/button";
 
+// --- Constants ---
 const PUBLIC_ITEMS = [
   { label: "首頁", href: "/" },
   { label: "產品介紹", href: "/products" },
@@ -30,6 +31,8 @@ const AUTH_ITEMS = [
   { label: "我的訂單", href: "/orders" },
   { label: "會員中心", href: "/user" },
 ];
+
+// --- Sub-components ---
 
 const NavLink = ({
   href,
@@ -113,15 +116,10 @@ const AuthSection = ({
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const hasHydrated = useHasHydrated();
-  const dispatch = useAppDispatch();
+  const { handleLogout } = useLogout();
   const { isAuthenticated: isLoggedIn, isInitialized } = useAppSelector(
     (state) => state.auth
   );
-
-  const handleLogout = () => {
-    dispatch(logout());
-    setIsOpen(false);
-  };
 
   return (
     <header className="bg-background/95 supports-backdrop-filter:bg-background/60 sticky top-0 z-50 w-full border-b backdrop-blur">
@@ -179,7 +177,7 @@ export const Navbar = () => {
                         ))}
                         <Button
                           variant="destructive"
-                          onClick={handleLogout}
+                          onClick={() => handleLogout(() => setIsOpen(false))}
                           className="mt-4 w-full"
                         >
                           <LogOut className="mr-2 h-4 w-4" /> 登出
