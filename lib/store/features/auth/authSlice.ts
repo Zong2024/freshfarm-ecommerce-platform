@@ -7,6 +7,7 @@ const initialState: AuthState = {
   token: null,
   isAuthenticated: false,
   expired: null,
+  isInitialized: false,
 };
 
 const authSlice = createSlice({
@@ -19,8 +20,15 @@ const authSlice = createSlice({
       state.token = token;
       state.expired = expired;
       state.isAuthenticated = true;
+      state.isInitialized = true;
     },
-    logout: () => initialState,
+    logout: (state) => {
+      state.user = null;
+      state.token = null;
+      state.isAuthenticated = false;
+      state.expired = null;
+      state.isInitialized = true;
+    },
     restoreAuth: (
       state,
       action: PayloadAction<{ uid: string; token: string }>
@@ -29,6 +37,7 @@ const authSlice = createSlice({
       state.user = { uid };
       state.token = token;
       state.isAuthenticated = true;
+      state.isInitialized = true;
     },
   },
 });

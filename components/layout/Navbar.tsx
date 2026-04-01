@@ -53,9 +53,11 @@ const NavLink = ({
 
 const DesktopNav = ({
   isLoggedIn,
+  isInitialized,
   hasHydrated,
 }: {
   isLoggedIn: boolean;
+  isInitialized: boolean;
   hasHydrated: boolean;
 }) => (
   <nav className="hidden items-center gap-6 md:flex">
@@ -70,22 +72,28 @@ const DesktopNav = ({
     <div className="relative">
       <CartBadge />
     </div>
-    <AuthSection isLoggedIn={isLoggedIn} hasHydrated={hasHydrated} />
+    <AuthSection
+      isLoggedIn={isLoggedIn}
+      isInitialized={isInitialized}
+      hasHydrated={hasHydrated}
+    />
   </nav>
 );
 
 const AuthSection = ({
   isLoggedIn,
+  isInitialized,
   hasHydrated,
 }: {
   isLoggedIn: boolean;
+  isInitialized: boolean;
   hasHydrated: boolean;
 }) => {
-  if (!hasHydrated) return <div className="h-10 w-10" />;
+  if (!hasHydrated || !isInitialized) return <div className="h-10 w-10" />;
 
   if (isLoggedIn) {
     return (
-      <div className="flex items-center gap-6 text-[24px] font-bold">
+      <div className="flex items-center gap-6 p-2 text-[24px] font-bold">
         <Link href="/user">
           <User className="h-6 w-6 font-bold" />
         </Link>
@@ -106,7 +114,9 @@ export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const hasHydrated = useHasHydrated();
   const dispatch = useAppDispatch();
-  const isLoggedIn = useAppSelector((state) => state.auth.isAuthenticated);
+  const { isAuthenticated: isLoggedIn, isInitialized } = useAppSelector(
+    (state) => state.auth
+  );
 
   const handleLogout = () => {
     dispatch(logout());
@@ -121,7 +131,11 @@ export const Navbar = () => {
         </Link>
 
         {/* 桌面版 */}
-        <DesktopNav isLoggedIn={isLoggedIn} hasHydrated={hasHydrated} />
+        <DesktopNav
+          isLoggedIn={isLoggedIn}
+          isInitialized={isInitialized}
+          hasHydrated={hasHydrated}
+        />
 
         {/* 行動版 */}
         <div className="flex items-center gap-4 md:hidden">
@@ -150,31 +164,34 @@ export const Navbar = () => {
                   />
                 ))}
 
-                {hasHydrated &&
-                  (isLoggedIn ? (
-                    <>
-                      {AUTH_ITEMS.map((item) => (
-                        <NavLink
-                          key={item.href}
-                          href={item.href}
-                          label={item.label}
-                          className="text-lg font-medium"
-                          onClick={() => setIsOpen(false)}
-                        />
-                      ))}
-                      <Button
-                        variant="destructive"
-                        onClick={handleLogout}
-                        className="mt-4 w-full"
-                      >
-                        <LogOut className="mr-2 h-4 w-4" /> 登出
-                      </Button>
-                    </>
-                  ) : (
-                    <Link href="/signin" onClick={() => setIsOpen(false)}>
-                      <Button className="w-full text-lg">登入 / 註冊</Button>
-                    </Link>
-                  ))}
+                {hasHydrated && isInitialized && (
+                  <>
+                    {isLoggedIn ? (
+                      <>
+                        {AUTH_ITEMS.map((item) => (
+                          <NavLink
+                            key={item.href}
+                            href={item.href}
+                            label={item.label}
+                            className="text-lg font-medium"
+                            onClick={() => setIsOpen(false)}
+                          />
+                        ))}
+                        <Button
+                          variant="destructive"
+                          onClick={handleLogout}
+                          className="mt-4 w-full"
+                        >
+                          <LogOut className="mr-2 h-4 w-4" /> 登出
+                        </Button>
+                      </>
+                    ) : (
+                      <Link href="/signin" onClick={() => setIsOpen(false)}>
+                        <Button className="w-full text-lg">登入 / 註冊</Button>
+                      </Link>
+                    )}
+                  </>
+                )}
               </nav>
             </SheetContent>
           </Sheet>

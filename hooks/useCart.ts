@@ -23,7 +23,9 @@ import { useHasHydrated } from "./useHasHydrated";
 export const useCart = () => {
   const dispatch = useAppDispatch();
   const hasHydrated = useHasHydrated();
-  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const { isAuthenticated, isInitialized } = useAppSelector(
+    (state) => state.auth
+  );
   const isCartHydrated = useAppSelector((state) => state.cart.isHydrated);
   const LocalCartItem = useAppSelector((state) => state.cart.items);
 
@@ -35,11 +37,12 @@ export const useCart = () => {
     isLoading,
     isError,
   } = useGetCartQuery(undefined, {
-    skip: !isAuthenticated,
+    skip: !isAuthenticated || !isInitialized,
   });
   const hasToken = !!Cookies.get("token");
-  const isAuthPending = hasToken && !isAuthenticated;
-  const isActionLoading = !isCartHydrated || isAuthPending || isLoading;
+  const isAuthPending = hasToken && !isInitialized;
+  const isActionLoading =
+    !isCartHydrated || !isInitialized || isAuthPending || isLoading;
   const cartItems = isAuthenticated ? apiCartData?.carts || [] : LocalCartItem;
   const cartTotalQty = cartItems.reduce(
     (acc: number, item) => acc + item.qty,
