@@ -28,7 +28,7 @@ const PUBLIC_ITEMS = [
 ];
 
 const AUTH_ITEMS = [
-  { label: "我的訂單", href: "/orders" },
+  { label: "我的訂單", href: "/user/orders" },
   { label: "會員中心", href: "/user" },
 ];
 
