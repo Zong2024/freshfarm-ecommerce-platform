@@ -1,5 +1,7 @@
 import z from "zod";
 
+import { CartProductSchema } from "./product";
+
 export const PaginationSchema = z.object({
   total_pages: z.number(),
   current_page: z.number(),
@@ -19,16 +21,23 @@ export const OrderProductSchema = z.object({
   id: z.string(),
   product_id: z.string(),
   qty: z.coerce.number().int().positive(),
+  total: z.number(),
+  final_total: z.number(),
+  product: CartProductSchema,
 });
 
 export const OrderSchema = z.object({
   id: z.string(),
   create_at: z.number(),
   is_paid: z.boolean(),
-  message: z.string().catch(""),
+  message: z.string().optional().default(""),
+  total: z.number(),
   num: z.number(),
   user: OrderUserSchema,
-  products: z.array(OrderProductSchema),
+  products: z
+    .record(z.string(), OrderProductSchema)
+    .transform((val) => Object.values(val)),
+  paid_date: z.number().optional(),
 });
 
 export const OrderResponseSchema = z.object({
@@ -41,3 +50,4 @@ export const OrderResponseSchema = z.object({
 export type OrderResponse = z.infer<typeof OrderResponseSchema>;
 export type Order = z.infer<typeof OrderSchema>;
 export type OrderUser = z.infer<typeof OrderUserSchema>;
+export type OrderProduct = z.infer<typeof OrderProductSchema>;
