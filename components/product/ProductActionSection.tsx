@@ -8,7 +8,7 @@ import { useCart } from "@/hooks/useCart";
 import { CirclePlus } from "lucide-react";
 
 import { AddToCartFullButton } from "@/components/button/AddToCartFullButton";
-import { QuantitySelector } from "@/components/ui/QuantitySelector";
+import { QuantitySelector } from "@/components/common/QuantitySelector";
 import { Button } from "@/components/ui/button";
 
 import { Product } from "@/types/product";

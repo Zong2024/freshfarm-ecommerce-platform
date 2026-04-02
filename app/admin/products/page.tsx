@@ -193,7 +193,7 @@ export default function AdminProductsPage() {
                           <Eye className="mr-2 h-4 w-4" /> 查看詳情
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem className="text-green-600">
+                        <DropdownMenuItem className="text-primary-400">
                           <CheckCircle className="mr-2 h-4 w-4" /> 批准上架
                         </DropdownMenuItem>
                         <DropdownMenuItem className="text-destructive">

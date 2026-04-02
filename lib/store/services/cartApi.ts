@@ -9,11 +9,21 @@ import { baseApi } from "./baseApi";
 
 export const cartApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getCart: builder.query<GetCartResponse, void>({
+    getCart: builder.query<GetCartResponse["data"], void>({
       query: () => ({
         url: "/cart",
       }),
-      providesTags: ["Cart"],
+      transformResponse: (response: GetCartResponse) => response.data,
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.carts.map(({ id }) => ({
+                type: "Cart" as const,
+                id,
+              })),
+              { type: "Cart", id: "LIST" },
+            ]
+          : [{ type: "Cart", id: "LIST" }],
     }),
     postCart: builder.mutation<AddToCartResponse, PostCartRequest>({
       query: (body) => ({
@@ -21,20 +31,20 @@ export const cartApi = baseApi.injectEndpoints({
         method: "POST",
         body: { data: body },
       }),
-      invalidatesTags: ["Cart"],
+      invalidatesTags: [{ type: "Cart", id: "LIST" }],
     }),
     deleteCart: builder.mutation<void, string>({
       query: (id) => ({
         url: `/cart/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Cart"],
+      invalidatesTags: (result, error, id) => [{ type: "Cart", id }],
       async onQueryStarted(id, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
           cartApi.util.updateQueryData("getCart", undefined, (draft) => {
-            const index = draft.data.carts.findIndex((c) => c.id === id);
+            const index = draft.carts.findIndex((c) => c.id === id);
             if (index !== -1) {
-              draft.data.carts.splice(index, 1);
+              draft.carts.splice(index, 1);
             }
           })
         );
@@ -56,11 +66,11 @@ export const cartApi = baseApi.injectEndpoints({
           },
         },
       }),
-      invalidatesTags: ["Cart"],
+      invalidatesTags: (result, error, { id }) => [{ type: "Cart", id }],
       async onQueryStarted({ id, qty }, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
           cartApi.util.updateQueryData("getCart", undefined, (draft) => {
-            const item = draft.data.carts.find((c) => c.id === id);
+            const item = draft.carts.find((c) => c.id === id);
             if (item) {
               item.qty = qty;
               item.total = item.product.price * qty;

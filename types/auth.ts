@@ -26,6 +26,7 @@ export interface AuthState {
   token: string | null;
   isAuthenticated: boolean;
   expired: number | null;
+  isInitialized: boolean;
 }
 
 export const AuthCheckResponseSchema = z.discriminatedUnion("success", [

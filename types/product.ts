@@ -47,7 +47,7 @@ export const GetAllProductsResponseSchema = BaseResponseSchema.extend({
   products: z.array(ProductSchema),
 });
 
-export type GetProductResponseSchema = z.infer<typeof GetProductResponseSchema>;
+export type GetProductResponse = z.infer<typeof GetProductResponseSchema>;
 export type GetProductsResponse = z.infer<typeof GetProductsResponseSchema>;
 export type GetAllProductsResponse = z.infer<
   typeof GetAllProductsResponseSchema

@@ -6,13 +6,7 @@ import { Minus, Plus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
-interface QuantitySelectorProps {
-  value?: number;
-  onChange?: (value: number) => void;
-  max?: number;
-  min?: number;
-  disabled?: boolean;
-}
+import { QuantitySelectorProps } from "./QuantitySelector.types";
 
 export const QuantitySelector = ({
   value,
@@ -49,15 +43,19 @@ export const QuantitySelector = ({
         className="hover:bg-0 px-4 py-3 transition-colors"
         onClick={handleDecrement}
         disabled={disabled || quantity <= min}
+        aria-label="減少數量"
       >
         <Minus className="h-4 w-4" />
       </Button>
-      <div className="min-w-[3.5rem] px-6 py-3 text-center">{quantity}</div>
+      <div className="min-w-14 px-6 py-3 text-center" aria-live="polite">
+        {quantity}
+      </div>
       <Button
         variant="ghost"
         className="hover:bg-0 px-4 py-3 transition-colors"
         onClick={handleIncrement}
         disabled={disabled || quantity >= max}
+        aria-label="增加數量"
       >
         <Plus className="h-4 w-4" />
       </Button>

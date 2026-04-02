@@ -6,7 +6,7 @@ import { useCart } from "@/hooks/useCart";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, useWatch } from "react-hook-form";
 
-import { CustomToast } from "@/components/CustomToast";
+import { CustomToast } from "@/components/common/CustomToast";
 import { Form } from "@/components/ui/form";
 
 import { clearLocalCart } from "@/lib/store/features/cart/cartSlice";
@@ -19,9 +19,9 @@ import {
   checkoutSchema,
 } from "@/types/checkout";
 
-import { CheckoutCartAccordion } from "./components/CheckoutCartAccordion";
-import { CheckoutForm } from "./components/CheckoutForm";
-import { CheckoutPay } from "./components/CheckoutPay";
+import { CheckoutCartAccordion } from "./_components/CheckoutCartAccordion";
+import { CheckoutForm } from "./_components/CheckoutForm";
+import { CheckoutPay } from "./_components/CheckoutPay";
 
 export default function Checkout() {
   const { cartItems } = useCart();
