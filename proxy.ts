@@ -1,11 +1,14 @@
 import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { NextRequest } from "next/server";
 
 export function proxy(request: NextRequest) {
   const token = request.cookies.get("token")?.value;
   const path = request.nextUrl.pathname;
 
-  // 1. 後台 (Admin) 路由保護
+  if (path.startsWith("/user") && !token) {
+    return NextResponse.redirect(new URL("/signin", request.url));
+  }
+
   if (path.startsWith("/admin")) {
     const isAdminLoginPage = path === "/admin/login";
     if (!token && !isAdminLoginPage) {
@@ -37,5 +40,11 @@ export function proxy(request: NextRequest) {
 
 // 設定 Middleware 要攔截哪些路徑
 export const config = {
-  matcher: ["/admin/:path*", "/checkout/:path*", "/signin", "/signup"],
+  matcher: [
+    "/admin/:path*",
+    "/checkout/:path*",
+    "/signin",
+    "/signup",
+    "/user/:path*",
+  ],
 };
