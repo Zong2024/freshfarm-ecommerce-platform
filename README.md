@@ -13,8 +13,8 @@
 
 ## 相關連結
 
-- **Live Demo:** [👉 點此前往實作 Demo](https://your-demo-link.vercel.app) <!-- 💡 建議部署至 Vercel 後填入 -->
-- **GitHub Repository:** [👉 專案原始碼](https://github.com/your-username/freshfarm)
+- **Live Demo:** [👉 點此前往實作 Demo](https://freshfarm-ecommerce-platform.vercel.app/)
+- **GitHub Repository:** [👉 專案原始碼](https://github.com/Zong2024/freshfarm-ecommerce-platform)
 
 ---
 
@@ -35,9 +35,9 @@
   </tr>
   <tr>
     <td width="50%">
-      <p align="center"><b>👨‍🌾 農民管理後台</b></p>
+      <p align="center"><b>👨‍🌾 農民管理後台 (UI Prototype)</b></p>
       <img src="https://via.placeholder.com/800x450?text=Farmer+Dashboard" alt="Farmer Dashboard">
-      <p align="center"><i>專為小農設計的產品上架與庫存管理系統。</i></p>
+      <p align="center"><i>專為小農設計的產品上架與庫存管理系統 (介面實作中)。</i></p>
     </td>
     <td width="50%">
       <p align="center"><b>💳 結帳流程體驗</b></p>
@@ -58,11 +58,22 @@
 - **會員中心：** 包含訂單追蹤、個人資料維護及收藏清單管理。
 - **流暢結帳流程：** 整合台灣行政區域選單，提供直觀的地址填寫與付款預覽。
 
-### 生產者與管理端 (Admin/Farmer)
+### 生產者與管理端 (Admin/Farmer) - 🚧 進行中
 
-- **角色權限系統：** 不同權限對應專屬後台介面。
-- **商品生命週期管理：** 農民可自行上架、編輯並監控其所屬產品狀態。
-- **訂單監控：** 管理員可全局查看銷售趨勢與訂單執行狀態。
+- **角色權限系統 (UI)：** 不同權限對應專屬後台介面，目前已完成基礎路由與 UI 配置。
+- **商品管理系統 (WIP)：** 串接六角學院 API 實作原型，支援基本的產品資料展示。
+- **後台數據儀表板：** 視覺化展示銷售數據與訂單狀態 (設計稿階段)。
+
+---
+
+## 🚀 開發計畫與技術轉型
+
+目前專案正處於從「前端原型」轉向「完整全棧」的過渡階段：
+
+1. **API 現狀：** 暫時採用 **六角學院提供的電商 API** 進行業務邏輯驗證 (如：商品獲取、購物車計算)。
+2. **下一步目標 (Next Step)：**
+    - **遷移至 Supabase：** 計畫將資料庫與認證系統全面遷移至 Supabase，以獲得更高的資料控制權與自定義欄位能力。
+    - **實作 Server Actions：** 配合 Next.js 16 特性，優化後台資料提交與狀態同步體驗。
 
 ---
 
