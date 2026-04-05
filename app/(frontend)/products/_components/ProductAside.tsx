@@ -1,6 +1,8 @@
+import { Suspense } from "react";
+
 import Link from "next/link";
 
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Loader2 } from "lucide-react";
 
 import { CategoryAccordion } from "@/components/CategoryAccordion";
 import { Button } from "@/components/ui/button";
@@ -37,7 +39,15 @@ export const ProductAside = ({ allProductsUrl }: ProductAsideProps) => {
             >
               所有產品
             </Link>
-            <CategoryAccordion CategoryData={CATEGORY_DATA} />
+            <Suspense
+              fallback={
+                <div className="flex h-20 items-center justify-center">
+                  <Loader2 className="text-primary-400 h-6 w-6 animate-spin" />
+                </div>
+              }
+            >
+              <CategoryAccordion CategoryData={CATEGORY_DATA} />
+            </Suspense>
           </PopoverContent>
         </Popover>
       </div>
@@ -48,7 +58,15 @@ export const ProductAside = ({ allProductsUrl }: ProductAsideProps) => {
         >
           所有商品
         </Link>
-        <CategoryAccordion CategoryData={CATEGORY_DATA} />
+        <Suspense
+          fallback={
+            <div className="flex h-20 items-center justify-center">
+              <Loader2 className="text-primary-400 h-6 w-6 animate-spin" />
+            </div>
+          }
+        >
+          <CategoryAccordion CategoryData={CATEGORY_DATA} />
+        </Suspense>
       </div>
     </aside>
   );
