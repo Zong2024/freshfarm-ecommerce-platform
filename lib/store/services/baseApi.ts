@@ -30,7 +30,7 @@ const prepareHeaders = (headers: Headers) => {
 };
 
 const defaultBaseQuery = fetchBaseQuery({
-  baseUrl: `${API_URL}/api${API_PATH}`,
+  baseUrl: `${API_URL}/api/${API_PATH}`,
   prepareHeaders,
 });
 const authBaseQuery = fetchBaseQuery({
