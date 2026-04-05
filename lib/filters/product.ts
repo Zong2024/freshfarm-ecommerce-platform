@@ -5,7 +5,7 @@ import { Product } from "@/types/product";
 export type CategoryType = "蔬菜" | "水果" | "水產" | "其他";
 export interface ProductFilters {
   q?: string;
-  origin?: CategoryType;
+  origin?: string;
   type?: string;
 }
 

@@ -23,7 +23,6 @@ export default async function ProductsPage({
   const q = getStringParam(params.q);
   const origin = getStringParam(params.origin);
   const type = getStringParam(params.type);
-  const organic = getStringParam(params.organic);
   const currentPage = Math.max(1, Number(params.page) || 1);
 
   const { products: allData } = await getAllProducts();
@@ -32,7 +31,6 @@ export default async function ProductsPage({
     q,
     origin,
     type,
-    organic,
   });
 
   const totalProduct = filteredProducts.length;
@@ -55,7 +53,7 @@ export default async function ProductsPage({
           </div>
 
           {/* 目前套用的過濾標籤 */}
-          <FilterBadges activeFilters={[origin, type, organic]} />
+          <FilterBadges activeFilters={[origin, type]} />
 
           {/* 產品列表或空狀態 */}
           <ProductGrid products={products} searchQuery={q} />
