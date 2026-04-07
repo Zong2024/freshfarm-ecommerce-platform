@@ -13,9 +13,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { OrderListCardProps } from "./OrderListCard.types";
+import { OrderListProps } from "./OrderList.types";
 
-export const OrderListCard = ({ orders }: OrderListCardProps) => {
+export const OrderList = ({ orders }: OrderListProps) => {
   if (!orders || orders.length === 0) {
     return (
       <div className="flex min-h-60 flex-col items-center justify-center rounded-lg border border-dashed border-gray-300 p-12 text-gray-500">

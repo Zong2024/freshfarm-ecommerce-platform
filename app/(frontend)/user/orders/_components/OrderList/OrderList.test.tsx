@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 
 import { Order } from "@/types/order";
 
-import { OrderListCard } from "./OrderListCard";
+import { OrderList } from "./OrderList";
 
 // 模擬符合 API 格式的 Mock Data
 const mockOrders: Order[] = [
@@ -38,27 +38,27 @@ const mockOrders: Order[] = [
   },
 ];
 
-describe("OrderListCard Component", () => {
+describe("OrderList Component", () => {
   it("當訂單列表為空時，應顯示尚無訂單訊息", () => {
-    render(<OrderListCard orders={[]} />);
+    render(<OrderList orders={[]} />);
     expect(screen.getByText("尚無訂單紀錄")).toBeInTheDocument();
   });
 
   it("應正確渲染訂單編號", () => {
-    render(<OrderListCard orders={mockOrders} />);
+    render(<OrderList orders={mockOrders} />);
     const orderIds = screen.getAllByText(/ORD123/);
     expect(orderIds.length).toBeGreaterThan(0);
   });
 
   it("應正確渲染訂單金額", () => {
-    render(<OrderListCard orders={mockOrders} />);
+    render(<OrderList orders={mockOrders} />);
     // 檢查是否有渲染出 1,500
     const amounts = screen.getAllByText(/NT\$ 1,500/);
     expect(amounts.length).toBeGreaterThan(0);
   });
 
   it("應正確顯示付款狀態", () => {
-    render(<OrderListCard orders={mockOrders} />);
+    render(<OrderList orders={mockOrders} />);
     const paidBadges = screen.getAllByText("已付款");
     expect(paidBadges.length).toBeGreaterThan(0);
   });

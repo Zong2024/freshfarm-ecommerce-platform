@@ -1,5 +1,5 @@
 import { Order } from "@/types/order";
 
-export interface OrderListCardProps {
+export interface OrderListProps {
   orders: Order[];
 }
