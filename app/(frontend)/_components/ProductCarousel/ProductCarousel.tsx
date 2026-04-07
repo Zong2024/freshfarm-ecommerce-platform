@@ -1,6 +1,5 @@
 "use client";
 
-// @ts-expect-error　正確載入
 import "swiper/css";
 import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
