@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "skills": {
+    "component-wizard": {
+      "source": "./skills/component-wizard",
+      "sourceType": "local",
+      "computedHash": "2cdbc99e1de8018cfe0c7343bb4a0b3d8421c4698d794b2d4abe6d415114afd6"
+    },
+    "skills/my-first-skill": {
+      "source": "./skills/my-first-skill",
+      "sourceType": "local",
+      "computedHash": "ba6c36a95d80fcefbcb198c01bf7c1cd9163ebd3d0a6532289accc7e2b278f7b"
+    }
+  }
+}
