@@ -6,6 +6,11 @@
       "sourceType": "local",
       "computedHash": "2cdbc99e1de8018cfe0c7343bb4a0b3d8421c4698d794b2d4abe6d415114afd6"
     },
+    "frontend-design": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "computedHash": "063a0e6448123cd359ad0044cc46b0e490cc7964d45ef4bb9fd842bd2ffbca67"
+    },
     "skills/my-first-skill": {
       "source": "./skills/my-first-skill",
       "sourceType": "local",
