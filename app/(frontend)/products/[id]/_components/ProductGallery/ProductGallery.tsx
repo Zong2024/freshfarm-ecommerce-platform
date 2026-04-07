@@ -6,15 +6,11 @@ import Image from "next/image";
 
 import { Heart } from "lucide-react";
 
+import { Button } from "@/components/ui/button";
+
 import { cn } from "@/lib/utils";
 
-import { Button } from "../ui/button";
-
-interface ProductGalleryProps {
-  mainImage: string;
-  subImages?: string[];
-  productTitle: string;
-}
+import { ProductGalleryProps } from "./ProductGallery.types";
 
 export const ProductGallery = ({
   mainImage,
@@ -29,7 +25,7 @@ export const ProductGallery = ({
   return (
     <>
       {/* 主圖 */}
-      <div className="relative aspect-[4/3] overflow-hidden rounded-sm bg-gray-100">
+      <div className="relative aspect-4/3 overflow-hidden rounded-sm bg-gray-100">
         <Image
           src={allImages[selectIndex] || mainImage}
           alt={productTitle}

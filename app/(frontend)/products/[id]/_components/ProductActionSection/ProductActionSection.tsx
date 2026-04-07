@@ -7,15 +7,11 @@ import { useRouter } from "next/navigation";
 import { useCart } from "@/hooks/useCart";
 import { CirclePlus } from "lucide-react";
 
-import { AddToCartFullButton } from "@/components/button/AddToCartFullButton";
-import { QuantitySelector } from "@/components/common/QuantitySelector";
+import { AddToCartFullButton } from "@/components/shared/AddToCartFullButton";
+import { QuantitySelector } from "@/components/shared/QuantitySelector";
 import { Button } from "@/components/ui/button";
 
-import { Product } from "@/types/product";
-
-interface ProductActionSectionProps {
-  product: Product;
-}
+import { ProductActionSectionProps } from "./ProductActionSection.types";
 
 export const ProductActionSection = ({
   product,
