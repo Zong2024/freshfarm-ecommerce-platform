@@ -2,15 +2,11 @@
 import { useCart } from "@/hooks/useCart";
 import { Loader2, ShoppingCart } from "lucide-react";
 
+import { Button } from "@/components/ui/button";
+
 import { cn } from "@/lib/utils";
 
-import { CartProduct } from "@/types/product";
-
-import { Button } from "../ui/button";
-
-interface AddToCartIconButtonProps {
-  product: CartProduct;
-}
+import { AddToCartIconButtonProps } from "./AddToCartIconButton.types";
 
 export const AddToCartIconButton = ({ product }: AddToCartIconButtonProps) => {
   const { addToCart, isLoading, hasHydrated } = useCart();

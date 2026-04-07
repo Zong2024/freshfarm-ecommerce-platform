@@ -1,14 +1,10 @@
-import { ComponentProps } from "react";
-
 import { Loader2 } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
 
 import { cn } from "@/lib/utils";
 
-import { Button } from "../ui/button";
-
-interface ActionFullButtonProps extends ComponentProps<typeof Button> {
-  isLoading?: boolean;
-}
+import { ActionFullButtonProps } from "./ActionFullButton.types";
 
 export const ActionFullButton = ({
   isLoading,

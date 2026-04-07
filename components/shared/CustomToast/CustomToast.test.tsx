@@ -29,12 +29,12 @@ describe("sonner Toast 組件測試", () => {
     expect(screen.getByText("失敗")).toBeInTheDocument();
   });
 
-  it("當點擊關閉按鈕時，應呼叫 toast.dismiss 並傳入正確的ID", async () => {
+  it("當點擊關閉按鈕時，應呼叫 toast.dismiss 並傳入正確的 ID", async () => {
     const user = userEvent.setup();
     render(<ToastContent {...defaultProps} />);
 
     const closeBtn = screen.getByRole("button", {
-      name: /Close Toast/i,
+      name: /關閉提示/i,
     });
 
     await user.click(closeBtn);

@@ -1,7 +1,9 @@
 "use client";
 
 import { Suspense } from "react";
+
 import { usePathname, useSearchParams } from "next/navigation";
+
 import {
   Pagination,
   PaginationContent,
@@ -12,10 +14,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 
-interface CustomPaginationProps {
-  totalPages: number;
-  className?: string;
-}
+import { CustomPaginationProps } from "./CustomPagination.types";
 
 function PaginationContentBase({
   totalPages,

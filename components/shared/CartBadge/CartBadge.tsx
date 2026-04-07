@@ -29,7 +29,7 @@ export const CartBadge = ({ className }: CartBadgeProps) => {
         "hover:text-primary relative inline-flex items-center p-2 transition-colors",
         className
       )}
-      aria-label="View Shopping Cart"
+      aria-label="查看購物車"
     >
       <ShoppingCart className="h-6 w-6" />
 

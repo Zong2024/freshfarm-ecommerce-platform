@@ -10,7 +10,7 @@ vi.mock("@/hooks/useCart", () => ({
 
 const mockedUseCart = vi.mocked(useCart);
 
-describe("CartBadge Components", () => {
+describe("CartBadge 組件", () => {
   const setupMockCart = (overrides = {}) => {
     mockedUseCart.mockReturnValue({
       cartTotalQty: 0,
@@ -30,7 +30,7 @@ describe("CartBadge Components", () => {
     vi.clearAllMocks();
   });
 
-  it("在hydration完成前，應顯示圖示而不是Link", () => {
+  it("在水合完成前，應顯示圖示而不是連結", () => {
     setupMockCart({
       hasHydrated: false,
       cartTotalQty: 10,
@@ -42,7 +42,7 @@ describe("CartBadge Components", () => {
     expect(screen.queryByText("10")).not.toBeInTheDocument();
   });
 
-  it("當購物車無商品時,不能顯示任何數字", () => {
+  it("當購物車無商品時，不應顯示任何數字", () => {
     setupMockCart({
       cartTotalQty: 0,
     });
@@ -50,7 +50,7 @@ describe("CartBadge Components", () => {
     render(<CartBadge />);
 
     expect(
-      screen.getByRole("link", { name: /View Shopping Cart/i })
+      screen.getByRole("link", { name: /查看購物車/i })
     ).toBeInTheDocument();
     expect(screen.queryByText("0")).not.toBeInTheDocument();
   });
@@ -60,6 +60,7 @@ describe("CartBadge Components", () => {
     render(<CartBadge />);
     expect(screen.queryByText("5")).not.toBeInTheDocument();
   });
+
   it("當 isError 為真時，不應顯示數字", () => {
     setupMockCart({
       isError: true,
@@ -80,7 +81,7 @@ describe("CartBadge Components", () => {
     expect(screen.getByText("5")).toBeInTheDocument();
   });
 
-  it("當使用者新增商品時,CartBadge會新增數量", () => {
+  it("當使用者新增商品時，CartBadge 應更新數量", () => {
     const { rerender } = render(<CartBadge />);
 
     setupMockCart({
@@ -100,7 +101,7 @@ describe("CartBadge Components", () => {
     expect(screen.getByText("3")).toBeInTheDocument();
   });
 
-  it("當購物車99個商品時，應正確顯示99", () => {
+  it("當購物車有 99 個商品時，應正確顯示 99", () => {
     setupMockCart({
       cartTotalQty: 99,
     });
@@ -110,7 +111,7 @@ describe("CartBadge Components", () => {
     expect(screen.getByText("99")).toBeInTheDocument();
   });
 
-  it("當購物車超過99個商品時，應正確顯示99+", () => {
+  it("當購物車超過 99 個商品時，應正確顯示 99+", () => {
     setupMockCart({
       cartTotalQty: 100,
     });
@@ -120,11 +121,11 @@ describe("CartBadge Components", () => {
     expect(screen.getByText("99+")).toBeInTheDocument();
   });
 
-  it("正確連結路徑 /cart", () => {
+  it("應具備正確的連結路徑 /cart", () => {
     setupMockCart();
 
     render(<CartBadge />);
-    const link = screen.getByRole("link", { name: /View Shopping Cart/i });
+    const link = screen.getByRole("link", { name: /查看購物車/i });
     expect(link).toHaveAttribute("href", "/cart");
   });
 });

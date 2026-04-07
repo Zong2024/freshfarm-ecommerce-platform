@@ -3,15 +3,8 @@
 import { useCart } from "@/hooks/useCart";
 import { ShoppingCart } from "lucide-react";
 
-import { CartProduct } from "@/types/product";
-
-import { ActionFullButton } from "./ActionFullButton";
-
-interface AddToCartFullButtonProps {
-  product: CartProduct;
-  quantity?: number;
-  className?: string;
-}
+import { ActionFullButton } from "../ActionFullButton";
+import { AddToCartFullButtonProps } from "./AddToCartFullButton.types";
 
 export const AddToCartFullButton = ({
   product,

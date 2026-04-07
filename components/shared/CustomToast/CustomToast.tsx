@@ -38,7 +38,7 @@ export const ToastContent = ({ type, message, toastId }: CustomToastProps) => {
       <button
         onClick={() => toast.dismiss(toastId)}
         className="ml-6 text-center text-gray-300 transition-colors hover:text-black"
-        aria-label="Close Toast"
+        aria-label="關閉提示"
       >
         <X className="h-6 w-6" />
       </button>
