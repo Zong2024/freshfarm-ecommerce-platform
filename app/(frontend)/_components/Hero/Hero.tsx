@@ -1,17 +1,15 @@
 import Image from "next/image";
+
 import backgroundImage from "@/public/image/hero-bg.jpg";
 
-interface HeroProps {
-  title: string;
-  subtitle: string;
-}
+import { HeroProps } from "./Hero.types";
 
 export const Hero = ({ title, subtitle }: HeroProps) => {
   return (
-    <section className="relative h-[500px] w-full overflow-hidden md:h-[960px]">
+    <section className="relative h-100 w-full overflow-hidden px-4 md:h-200">
       <Image
         src={backgroundImage}
-        alt="Fresh Farm Background"
+        alt="FreshFarm Background"
         placeholder="blur"
         quality={80}
         fill
@@ -21,9 +19,9 @@ export const Hero = ({ title, subtitle }: HeroProps) => {
       />
       <div className="absolute inset-0 bg-black/40" />
 
-      <div className="relative z-10 container mx-auto flex h-full items-center justify-center text-white md:justify-start">
+      <div className="relative z-10 container mx-auto flex h-full items-center justify-start text-white md:justify-start">
         <div className="text-start">
-          <div className="md:flex">
+          <div className="lg:flex">
             <h1 className="text-primary-100 text-2xl font-bold md:me-1 md:text-5xl">
               Fresh Farm
             </h1>

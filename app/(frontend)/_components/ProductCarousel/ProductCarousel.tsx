@@ -1,10 +1,11 @@
 "use client";
 
+// @ts-expect-error　正確載入
 import "swiper/css";
 import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import { ProductCard } from "@/components/product/ProductCard";
+import { ProductCard } from "@/components/shared/ProductCard";
 
 import { useGetProductsQuery } from "@/lib/store/services/productApi";
 
@@ -19,17 +20,9 @@ export function ProductCarousel() {
     );
   }
 
-  if (error || !data?.products) {
-    return (
-      <div className="text-destructive p-8 text-center">
-        無法載入商品資料，請稍後再試。
-      </div>
-    );
-  }
+  const products = data?.products?.filter((p) => p.is_enabled === 1) || [];
 
-  const products = data.products.filter((p) => p.is_enabled === 1);
-
-  if (products.length === 0) {
+  if (error || products.length === 0) {
     return null;
   }
 
