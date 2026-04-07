@@ -1,4 +1,8 @@
+import { Suspense } from "react";
+
 import { SectionHeader } from "@/app/(frontend)/_components/SectionHeader";
+
+import { ProductCarouselSkeleton } from "@/components/shared/ProductCard";
 
 import { CategorySection } from "./_components/CategorySection";
 import { Hero } from "./_components/Hero";
@@ -15,7 +19,9 @@ export default function Home() {
           subtitle="支持在地，享受最新鮮的台灣味"
         />
 
-        <ProductCarousel />
+        <Suspense fallback={<ProductCarouselSkeleton />}>
+          <ProductCarousel />
+        </Suspense>
       </section>
       <div className="bg-primary-100 lg:rounded-tl-[200px] lg:rounded-bl-[200px]">
         <section className="container mx-auto px-3 py-20 lg:py-30">
