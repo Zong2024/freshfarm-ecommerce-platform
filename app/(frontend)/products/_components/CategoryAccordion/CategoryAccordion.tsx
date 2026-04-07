@@ -2,24 +2,16 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-import { cn } from "@/lib/utils";
-
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "./ui/accordion";
+} from "@/components/ui/accordion";
 
-type CategoryItem = {
-  id: string;
-  title: string;
-  items: string[];
-};
+import { cn } from "@/lib/utils";
 
-type CategoryAccordionProps = {
-  CategoryData: CategoryItem[];
-};
+import { CategoryAccordionProps } from "./CategoryAccordion.types";
 
 export const CategoryAccordion = ({
   CategoryData = [],
@@ -55,6 +47,8 @@ export const CategoryAccordion = ({
                   const isActive = searchParams.get(category.id) === item;
                   return (
                     <li
+                      role="button"
+                      tabIndex={0}
                       key={item}
                       onClick={() => handleFilterClick(category.id, item)}
                       className={cn(
