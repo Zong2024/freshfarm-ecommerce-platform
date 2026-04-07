@@ -1,7 +1,8 @@
-import { CustomPagination } from "@/components/CustomPagination";
-import { OrderListCard } from "@/components/order/OrderListCard";
+import { CustomPagination } from "@/components/shared/CustomPagination";
 
 import { getOrders } from "@/lib/services/order";
+
+import { OrderList } from "./_components/OrderList";
 
 interface UserOrdersPageProps {
   searchParams: Promise<{ page?: string }>;
@@ -21,7 +22,7 @@ export default async function UserOrdersPage({
       <h2 className="text-primary-400 mb-6 text-xl font-bold">訂單查詢</h2>
 
       <div className="mb-8">
-        <OrderListCard orders={data.orders} />
+        <OrderList orders={data.orders} />
       </div>
 
       {data.pagination.total_pages > 1 && (

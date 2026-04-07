@@ -1,5 +1,5 @@
-import { CustomPagination } from "@/components/CustomPagination";
-import { SearchBar } from "@/components/common/SearchBar";
+import { CustomPagination } from "@/components/shared/CustomPagination";
+import { SearchBar } from "@/components/shared/SearchBar";
 
 import { filterProducts } from "@/lib/filters/product";
 import { getAllProducts } from "@/lib/services/product";

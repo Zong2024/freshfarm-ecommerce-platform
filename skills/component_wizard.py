@@ -1,13 +1,14 @@
 import os
 
-def create_component(name: str, category: str = "common"):
+def create_component(name: str, category: str = "common", custom_path: str = None):
     """
-    建立標準組件資料夾 (Folder-per-component)。
-    包含: .tsx, .types.ts, index.ts, .test.tsx
+    custom_path: 如果提供，則忽略 category，直接建立在該路徑下。
+    例如: custom_path="app/shop/_components"
     """
-    # 路徑定位於 components
-    target_dir = f"components/{category}/{name}"
-    os.makedirs(target_dir, exist_ok=True)
+    if custom_path:
+        target_dir = os.path.join(custom_path, name)
+    else:
+        target_dir = f"components/{category}/{name}"
 
     # 1. Component.tsx (使用 shadcn/ui 規範與 Tailwind v4)
     tsx = f"""import {{ {name}Props }} from './{name}.types';

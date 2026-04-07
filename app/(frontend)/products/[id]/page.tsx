@@ -1,7 +1,9 @@
-import { ProductActionSection } from "@/components/product/ProductActionSection";
-import { ProductGallery } from "@/components/product/ProductGallery";
+import { title } from "process";
 
 import { getProduct } from "@/lib/services/product";
+
+import { ProductActionSection } from "./_components/ProductActionSection";
+import { ProductGallery } from "./_components/ProductGallery";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -10,6 +12,12 @@ type Props = {
 export default async function ProductDetailPage({ params }: Props) {
   const { id } = await params;
   const product = await getProduct(id);
+  const cartProductData = {
+    id: product.id,
+    title: product.title,
+    price: product.price,
+    imageUrl: product.imageUrl,
+  };
 
   return (
     <div className="container mx-auto max-w-5xl px-4 py-15">
@@ -66,7 +74,7 @@ export default async function ProductDetailPage({ params }: Props) {
           </div>
 
           {/* 數量選擇器與操作按鈕 */}
-          <ProductActionSection product={product} />
+          <ProductActionSection product={cartProductData} />
 
           {/* 運送/付款提示區塊 */}
           <div className="bg-secondary-50 mt-4 rounded-sm border-none px-6 py-4 leading-relaxed">

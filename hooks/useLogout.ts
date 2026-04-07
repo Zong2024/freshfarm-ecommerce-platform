@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 
-import { CustomToast } from "@/components/common/CustomToast";
+import { CustomToast } from "@/components/shared/CustomToast";
 
 import { logout } from "@/lib/store/features/auth/authSlice";
 import { useAppDispatch } from "@/lib/store/hooks";
