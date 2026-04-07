@@ -45,3 +45,5 @@ agent.md
 .opencodeignore
 
 *-learning-log.md
+
+__pycache__/

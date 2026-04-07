@@ -50,15 +50,24 @@ describe('{name} Component', () => {{
 """
 
     # 檔案寫入
-    files = {{
+    files = {
         f"{name}.tsx": tsx,
         f"{name}.types.ts": types,
         "index.ts": index,
         f"{name}.test.tsx": test
-    }}
+    }
 
     for filename, content in files.items():
         with open(os.path.join(target_dir, filename), "w", encoding="utf-8") as f:
             f.write(content)
 
     return f"Successfully created {name} in {target_dir}"
+
+if __name__ == "__main__":
+    import sys
+    if len(sys.argv) > 1:
+        name = sys.argv[1]
+        category = sys.argv[2] if len(sys.argv) > 2 else "shared"
+        print(create_component(name, category))
+    else:
+        print("Usage: python3 component_wizard.py <name> [category]")
