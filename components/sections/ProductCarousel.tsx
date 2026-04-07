@@ -4,7 +4,10 @@ import "swiper/css";
 import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import { ProductCard } from "@/components/product/ProductCard";
+import {
+  ProductCard,
+  ProductCardSkeleton,
+} from "@/components/card/ProductCard";
 
 import { useGetProductsQuery } from "@/lib/store/services/productApi";
 
@@ -13,8 +16,10 @@ export function ProductCarousel() {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center p-8">
-        <div className="border-primary-400 h-8 w-8 animate-spin rounded-full border-4 border-t-transparent"></div>
+      <div className="grid grid-cols-1 gap-4 px-4 sm:grid-cols-2 lg:grid-cols-4">
+        {[...Array(4)].map((_, i) => (
+          <ProductCardSkeleton key={i} />
+        ))}
       </div>
     );
   }

@@ -1,4 +1,4 @@
-import { ProductCard } from "@/components/product/ProductCard";
+import { ProductCard } from "@/components/card/ProductCard";
 
 import { Product } from "@/types/product";
 

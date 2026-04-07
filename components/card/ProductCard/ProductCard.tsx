@@ -1,13 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { Product } from "@/types/product";
+import { AddToCartIconButton } from "@/components/button/AddToCartIconButton";
 
-import { AddToCartIconButton } from "../button/AddToCartIconButton";
-
-interface ProductCardProps {
-  product: Product;
-}
+import { ProductCardProps } from "./ProductCard.types";
 
 export function ProductCard({ product }: ProductCardProps) {
   const { imageUrl, title, category, id, description, price, origin_price } =
