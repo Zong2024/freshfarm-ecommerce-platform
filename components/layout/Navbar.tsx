@@ -48,9 +48,13 @@ const NavLink = ({
   <Link
     href={href}
     onClick={onClick}
-    className={cn("hover:text-primary-300 transition-colors", className)}
+    className={cn(
+      "group hover:text-primary relative py-2 text-base font-semibold tracking-tight text-gray-400 transition-colors",
+      className
+    )}
   >
     {label}
+    <span className="bg-primary absolute -bottom-0.5 left-1/2 h-0.5 w-0 -translate-x-1/2 transition-all duration-300 group-hover:w-full" />
   </Link>
 );
 
@@ -63,23 +67,20 @@ const DesktopNav = ({
   isInitialized: boolean;
   hasHydrated: boolean;
 }) => (
-  <nav className="hidden items-center gap-6 md:flex">
+  <nav className="hidden items-center gap-8 md:flex">
     {PUBLIC_ITEMS.map((item) => (
-      <NavLink
-        key={item.href}
-        href={item.href}
-        label={item.label}
-        className="py-2 text-[24px] font-bold"
-      />
+      <NavLink key={item.href} href={item.href} label={item.label} />
     ))}
-    <div className="relative">
-      <CartBadge />
+    <div className="border-border flex items-center gap-6 border-l pl-8">
+      <div className="relative transition-transform hover:scale-110">
+        <CartBadge />
+      </div>
+      <AuthSection
+        isLoggedIn={isLoggedIn}
+        isInitialized={isInitialized}
+        hasHydrated={hasHydrated}
+      />
     </div>
-    <AuthSection
-      isLoggedIn={isLoggedIn}
-      isInitialized={isInitialized}
-      hasHydrated={hasHydrated}
-    />
   </nav>
 );
 
@@ -96,17 +97,18 @@ const AuthSection = ({
 
   if (isLoggedIn) {
     return (
-      <div className="flex items-center gap-6 p-2 text-[24px] font-bold">
-        <Link href="/user">
-          <User className="h-6 w-6 font-bold" />
-        </Link>
-      </div>
+      <Link
+        href="/user"
+        className="bg-primary/5 text-primary hover:bg-primary flex h-10 w-10 items-center justify-center rounded-full transition-all hover:text-white"
+      >
+        <User className="h-5 w-5" />
+      </Link>
     );
   }
 
   return (
     <Link href="/signin">
-      <Button variant="outline" className="rounded-full px-6 font-bold">
+      <Button className="bg-primary hover:bg-primary/90 rounded-full px-6 font-bold text-white">
         登入
       </Button>
     </Link>
@@ -122,10 +124,14 @@ export const Navbar = () => {
   );
 
   return (
-    <header className="bg-background/95 supports-backdrop-filter:bg-background/60 sticky top-0 z-50 w-full border-b backdrop-blur">
-      <div className="text-primary-400 container mx-auto flex items-center justify-between px-6 py-4 md:py-7 lg:px-0">
-        <Link href="/" className="text-xl font-bold">
-          LOGO
+    <header className="border-border bg-background/80 sticky top-0 z-50 w-full border-b backdrop-blur-md">
+      <div className="container mx-auto flex items-center justify-between px-6 py-4 md:py-5 lg:px-0">
+        <Link
+          href="/"
+          className="font-heading text-primary flex items-center gap-2 text-2xl font-black tracking-tighter"
+        >
+          <span className="bg-primary h-8 w-1 rounded-full" />
+          FRESH FARM
         </Link>
 
         {/* 桌面版 */}
@@ -141,29 +147,33 @@ export const Navbar = () => {
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
               <Button
-                variant="default"
+                variant="ghost"
                 size="icon"
-                className="bg-gray-100 hover:bg-transparent"
+                className="hover:bg-primary/5"
               >
-                <Menu className="h-6 w-6 text-black" />
+                <Menu className="text-foreground h-6 w-6" />
                 <span className="sr-only">切換選單</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-75 p-6 sm:w-100">
-              <SheetTitle className="text-left">選單</SheetTitle>
-              <nav className="mt-8 flex flex-col gap-4">
+            <SheetContent side="right" className="w-80 p-6">
+              <SheetTitle className="font-heading text-primary text-left text-xl font-bold">
+                選單
+              </SheetTitle>
+              <nav className="mt-10 flex flex-col gap-2">
                 {PUBLIC_ITEMS.map((item) => (
                   <NavLink
                     key={item.href}
                     href={item.href}
                     label={item.label}
-                    className="text-lg font-medium"
+                    className="hover:bg-primary/5 rounded-lg px-4 py-3 text-lg"
                     onClick={() => setIsOpen(false)}
                   />
                 ))}
 
+                <div className="border-border my-6 border-t pt-6" />
+
                 {hasHydrated && isInitialized && (
-                  <>
+                  <div className="space-y-2">
                     {isLoggedIn ? (
                       <>
                         {AUTH_ITEMS.map((item) => (
@@ -171,24 +181,26 @@ export const Navbar = () => {
                             key={item.href}
                             href={item.href}
                             label={item.label}
-                            className="text-lg font-medium"
+                            className="hover:bg-primary/5 rounded-lg px-4 py-3 text-lg"
                             onClick={() => setIsOpen(false)}
                           />
                         ))}
                         <Button
                           variant="destructive"
                           onClick={() => handleLogout(() => setIsOpen(false))}
-                          className="mt-4 w-full"
+                          className="mt-6 w-full rounded-xl"
                         >
                           <LogOut className="mr-2 h-4 w-4" /> 登出
                         </Button>
                       </>
                     ) : (
                       <Link href="/signin" onClick={() => setIsOpen(false)}>
-                        <Button className="w-full text-lg">登入 / 註冊</Button>
+                        <Button className="bg-primary w-full rounded-xl py-6 text-lg">
+                          登入 / 註冊
+                        </Button>
                       </Link>
                     )}
-                  </>
+                  </div>
                 )}
               </nav>
             </SheetContent>
