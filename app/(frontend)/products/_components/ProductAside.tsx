@@ -4,7 +4,6 @@ import Link from "next/link";
 
 import { ChevronDown, Loader2 } from "lucide-react";
 
-import { CategoryAccordion } from "@/components/CategoryAccordion";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -13,6 +12,8 @@ import {
 } from "@/components/ui/popover";
 
 import { CATEGORY_DATA } from "@/lib/constants";
+
+import { CategoryAccordion } from "./CategoryAccordion";
 
 interface ProductAsideProps {
   allProductsUrl: string;

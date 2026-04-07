@@ -3,7 +3,7 @@ import { act, renderHook } from "@testing-library/react";
 import Cookies from "js-cookie";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { CustomToast } from "@/components/common/CustomToast";
+import { CustomToast } from "@/components/shared/CustomToast";
 
 import {
   addToLocalCart,
@@ -23,7 +23,7 @@ import { RootState } from "@/lib/store/store";
 import { CartProduct } from "@/types/product";
 
 vi.mock("js-cookie");
-vi.mock("@/components/common/CustomToast");
+vi.mock("@/components/shared/CustomToast");
 vi.mock("@/lib/store/hooks");
 vi.mock("@/lib/store/services/cartApi");
 vi.mock("@/hooks/useHasHydrated", () => ({

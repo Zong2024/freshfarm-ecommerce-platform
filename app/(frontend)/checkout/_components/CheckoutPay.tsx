@@ -2,7 +2,7 @@
 
 import { MoveRight } from "lucide-react";
 
-import { ActionFullButton } from "@/components/button/ActionFullButton";
+import { ActionFullButton } from "@/components/shared/ActionFullButton";
 
 interface CheckoutPayProps {
   itemsTotal: number;

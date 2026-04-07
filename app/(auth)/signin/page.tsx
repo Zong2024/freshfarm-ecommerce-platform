@@ -12,7 +12,7 @@ import { Facebook, Leaf, Loader2, Lock, Mail } from "lucide-react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { CustomToast } from "@/components/common/CustomToast";
+import { CustomToast } from "@/components/shared/CustomToast";
 import { Button } from "@/components/ui/button";
 import {
   Form,

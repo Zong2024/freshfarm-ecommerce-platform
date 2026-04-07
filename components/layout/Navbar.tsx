@@ -18,7 +18,7 @@ import {
 import { useAppSelector } from "@/lib/store/hooks";
 import { cn } from "@/lib/utils";
 
-import { CartBadge } from "../badge/CartBadge";
+import { CartBadge } from "../shared/CartBadge";
 import { Button } from "../ui/button";
 
 // --- Constants ---
@@ -123,7 +123,7 @@ export const Navbar = () => {
 
   return (
     <header className="bg-background/95 supports-backdrop-filter:bg-background/60 sticky top-0 z-50 w-full border-b backdrop-blur">
-      <div className="text-primary-400 container mx-auto flex items-center justify-between px-9 py-4 md:py-7">
+      <div className="text-primary-400 container mx-auto flex items-center justify-between px-6 py-4 md:py-7 lg:px-0">
         <Link href="/" className="text-xl font-bold">
           LOGO
         </Link>
