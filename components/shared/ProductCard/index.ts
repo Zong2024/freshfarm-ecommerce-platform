@@ -1,2 +1,3 @@
 export * from "./ProductCard";
+export * from "./ProductCardSkeleton";
 export * from "./ProductCard.types";
