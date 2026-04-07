@@ -6,14 +6,14 @@ import { useRouter } from "next/navigation";
 import { useCart } from "@/hooks/useCart";
 import { MoveRight, ShoppingBag } from "lucide-react";
 
-import { ActionFullButton } from "@/components/button/ActionFullButton";
-import { CartCard } from "@/components/card/CartCard";
-import { CartTable } from "@/components/table/CartTable";
+import { ActionFullButton } from "@/components/shared/ActionFullButton";
 import { Button } from "@/components/ui/button";
 
 import { useAppSelector } from "@/lib/store/hooks";
 
 import Loading from "../loading";
+import { CartCard } from "./_components/CartCard";
+import { CartTable } from "./_components/CartTable";
 
 export default function CartPage() {
   const { cartItems, isLoading, handleDelete, handleUpdate, hasHydrated } =
@@ -39,14 +39,15 @@ export default function CartPage() {
         <div className="mb-6 rounded-full bg-gray-100 p-6 text-gray-400">
           <ShoppingBag className="h-16 w-16" />
         </div>
-        <h2 className="mb-2 text-2xl font-bold text-gray-800">
-          您的購物車目前是空的
-        </h2>
-        <p className="mb-8 text-gray-500">
+        <h2 className="mb-2 text-2xl font-bold">您的購物車目前是空的</h2>
+        <p className="mb-8 text-gray-400">
           快去逛逛我們的農場，挑選新鮮商品吧！
         </p>
         <Link href="/products">
-          <Button className="px-8 py-6 text-lg font-bold text-white">
+          <Button
+            variant="default"
+            className="px-8 py-6 text-lg font-bold text-white"
+          >
             前往商品頁
           </Button>
         </Link>

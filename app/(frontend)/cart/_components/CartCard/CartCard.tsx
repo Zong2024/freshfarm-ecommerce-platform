@@ -2,19 +2,12 @@ import Image from "next/image";
 
 import { Trash2 } from "lucide-react";
 
+import { QuantitySelector } from "@/components/shared/QuantitySelector";
+import { Button } from "@/components/ui/button";
+
 import { cn } from "@/lib/utils";
 
-import { CartItem } from "@/types/cart";
-
-import { QuantitySelector } from "../common/QuantitySelector";
-import { Button } from "../ui/button";
-
-interface CartCardProps {
-  cartItems?: CartItem[];
-  className?: string;
-  onUpdate: (id: string, product_id: string, qty: number) => Promise<void>;
-  onDelete: (id: string) => Promise<void>;
-}
+import { CartCardProps } from "./CartCard.types";
 
 export const CartCard = ({
   cartItems,
@@ -51,16 +44,16 @@ export const CartCard = ({
 
             {/* 商品資訊 */}
             <div className="flex flex-1 flex-col gap-1">
-              <h3 className="line-clamp-2 text-base font-bold text-gray-800">
+              <h3 className="text-primary-400 line-clamp-1 text-base font-bold">
                 {item.product.title}
               </h3>
-              <div className="flex text-sm text-gray-500">
+              <div className="flex text-sm">
                 <p className="me-3">單價</p>
                 <p>NT$ {item.product.price}</p>
               </div>
               <div className="flex text-sm">
-                <p className="me-3 font-medium text-gray-600">小計</p>
-                <p className="text-primary-400 font-bold">NT$ {item.total}</p>
+                <p className="me-3 text-sm">小計</p>
+                <p className="font-bold">NT$ {item.total}</p>
               </div>
             </div>
 
@@ -79,7 +72,7 @@ export const CartCard = ({
           </div>
 
           {/* 數量選擇器 */}
-          <div className="mt-4 border-t pt-3">
+          <div className="mt-3">
             <QuantitySelector
               value={item.qty}
               onChange={(newQty) => onUpdate(item.id, item.product_id, newQty)}

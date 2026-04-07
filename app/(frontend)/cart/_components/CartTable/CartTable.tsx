@@ -2,16 +2,10 @@ import Image from "next/image";
 
 import { Trash2 } from "lucide-react";
 
-import { CartItem } from "@/types/cart";
+import { QuantitySelector } from "@/components/shared/QuantitySelector";
+import { Button } from "@/components/ui/button";
 
-import { QuantitySelector } from "../common/QuantitySelector";
-import { Button } from "../ui/button";
-
-interface CartTableProps {
-  cartItems?: CartItem[];
-  onUpdate: (id: string, product_id: string, qty: number) => Promise<void>;
-  onDelete: (id: string) => Promise<void>;
-}
+import { CartTableProps } from "./CartTable.types";
 
 export const CartTable = ({
   cartItems,
@@ -49,7 +43,7 @@ export const CartTable = ({
                   </span>
                 </div>
               </td>
-              <td className="py-6 text-center text-gray-600">
+              <td className="py-6 text-center text-gray-400">
                 NT$ {item.product.price}
               </td>
               <td className="py-6">
