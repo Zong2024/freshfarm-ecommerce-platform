@@ -20,28 +20,49 @@
 
 ## 專案展示
 
-<table>
+<table width="100%">
   <tr>
-    <td width="50%">
-      <p align="center"><b>🏠 品牌首頁 (Responsive)</b></p>
-      <img src="https://via.placeholder.com/800x450?text=Home+Page+Showcase" alt="Home Page">
+    <td width="50%" align="center"><b>🏠 品牌首頁</b></td>
+    <td width="50%" align="center"><b>🛒 購物車系統</b></td>
+  </tr>
+
+  <tr>
+    <td align="center" valign="middle">
+      <img src="./assets/home-mockup.png" width="100%" alt="Home Page">
+    </td>
+    <td align="center" valign="middle">
+      <img src="./assets/cartflow.gif" width="100%" alt="Shopping Cart">
+    </td>
+  </tr>
+
+  <tr>
+    <td align="center" valign="top">
       <p align="center"><i>Mobile-first 響應式設計，提供流暢的時令蔬果瀏覽體驗。</i></p>
     </td>
-    <td width="50%">
-      <p align="center"><b>🛒 智能購物車系統</b></p>
-      <img src="https://via.placeholder.com/800x450?text=Shopping+Cart+Showcase" alt="Shopping Cart">
+    <td align="center" valign="top">
       <p align="center"><i>基於 Redux 持久化技術，實現跨頁面、即時更新的購物車邏輯。</i></p>
     </td>
   </tr>
+  <!-- 分隔空間 -->
+  <tr><td colspan="2"><br /></td></tr>
   <tr>
-    <td width="50%">
-      <p align="center"><b>👨‍🌾 農民管理後台 (UI Prototype)</b></p>
-      <img src="https://via.placeholder.com/800x450?text=Farmer+Dashboard" alt="Farmer Dashboard">
+    <td width="50%" align="center"><b>👨‍🌾 農民管理後台 (UI Prototype)</b></td>
+    <td width="50%" align="center"><b>💳 結帳流程體驗</b></td>
+  </tr>
+  <tr>
+    <td align="center" valign="middle">
+      <img src="./assets/farm.png" width="100%" alt="Farmer Dashboard">
+    </td>
+    <td align="center" valign="middle">
+      <img src="https://via.placeholder.com/800x450?text=Checkout+Flow" width="100%" alt="Checkout Flow">
+    </td>
+  </tr>
+  <!-- 第二組展示：說明文字行 -->
+  <tr>
+    <td align="center" valign="top">
       <p align="center"><i>專為小農設計的產品上架與庫存管理系統 (介面實作中)。</i></p>
     </td>
-    <td width="50%">
-      <p align="center"><b>💳 結帳流程體驗</b></p>
-      <img src="https://via.placeholder.com/800x450?text=Checkout+Flow" alt="Checkout Flow">
+    <td align="center" valign="top">
       <p align="center"><i>多步驟式 (Stepper) 結帳，確保訂單資訊準確並提升轉換率。</i></p>
     </td>
   </tr>
@@ -53,8 +74,8 @@
 
 ### 消費者端 (B2C)
 
-- **動態商品瀏覽：** 採用當季限定分組，結合高效能的商品列表過濾。
-- **全方位購物車：** 支援即時數量調整、側邊欄預覽及持久化存儲（即使重新整理也不丟失）。
+- **動態商品瀏覽：** 採用產地與品項分組，結合高效能的商品列表過濾。
+- **全方位購物車：** 支援即時數量調整、持久化存儲（即使重新整理也不丟失）。
 - **會員中心：** 包含訂單追蹤、個人資料維護及收藏清單管理。
 - **流暢結帳流程：** 整合台灣行政區域選單，提供直觀的地址填寫與付款預覽。
 
@@ -66,14 +87,18 @@
 
 ---
 
-## 🚀 開發計畫與技術轉型
+## 開發計畫與技術轉型
 
-目前專案正處於從「前端原型」轉向「完整全棧」的過渡階段：
+目前專案正處於從「前端功能驗證」轉向「全棧自主控管」的過渡階段，開發路線如下：
 
-1. **API 現狀：** 暫時採用 **六角學院提供的電商 API** 進行業務邏輯驗證 (如：商品獲取、購物車計算)。
-2. **下一步目標 (Next Step)：**
-    - **遷移至 Supabase：** 計畫將資料庫與認證系統全面遷移至 Supabase，以獲得更高的資料控制權與自定義欄位能力。
-    - **實作 Server Actions：** 配合 Next.js 16 特性，優化後台資料提交與狀態同步體驗。
+1. **前端原型與業務邏輯驗證：**
+   - **資料介接：** 採用第三方電商 RESTful API 服務進行資料驅動測試。
+   - **目的：** 先完成複雜的 UI 互動、購物車狀態管理與 RWD 佈局，確保商業邏輯（如結帳流程、商品過濾）之穩定性。
+2. **全棧轉型與資料自主化 (Next Step)：**
+   - **資料庫遷移：** 計畫從第三方服務遷移至 Supabase 。
+   - **核心優勢：**
+     - **自主控管** 自定義資料表結構（Schema），擺脫第三方 API 欄位限制。
+     - **身分驗證** 實作 Supabase Auth，達成更嚴謹的會員權限與後台管理功能。
 
 ---
 
@@ -144,10 +169,10 @@ npm run test
 
 ---
 
-## 🤝 聯繫我
+## 聯繫我
 
 如果你對此專案有任何興趣、建議，或是正在尋找熱衷於技術挑戰的前端工程師，歡迎透過以下方式聯繫：
 
-- **Email:** [your-email@example.com]
+- **Email:** [Zong20021107@gmail.com]
 
 ---
