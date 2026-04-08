@@ -34,15 +34,23 @@ export const CategoryAccordion = ({
   };
 
   return (
-    <>
-      <Accordion type="multiple" defaultValue={["origin"]} className="max-w-lg">
+    <div className="w-full max-w-lg">
+      <Accordion
+        type="multiple"
+        defaultValue={["origin"]}
+        className="space-y-1"
+      >
         {CategoryData.map((category) => (
-          <AccordionItem key={category.id} value={category.id}>
-            <AccordionTrigger className="md:text-primary-300 hover:text-primary-400 b px-1 py-3 md:py-4 md:text-xl">
+          <AccordionItem
+            key={category.id}
+            value={category.id}
+            className="border-none"
+          >
+            <AccordionTrigger className="font-heading text-foreground hover:text-primary px-2 py-4 text-lg font-semibold tracking-tight no-underline transition-colors duration-300 hover:no-underline md:text-xl">
               {category.title}
             </AccordionTrigger>
-            <AccordionContent>
-              <ul className="md:bg-primary-100 flex flex-col">
+            <AccordionContent className="pb-4">
+              <ul className="flex flex-col gap-1 px-1">
                 {category.items.map((item) => {
                   const isActive = searchParams.get(category.id) === item;
                   return (
@@ -51,13 +59,27 @@ export const CategoryAccordion = ({
                       tabIndex={0}
                       key={item}
                       onClick={() => handleFilterClick(category.id, item)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          handleFilterClick(category.id, item);
+                        }
+                      }}
                       className={cn(
-                        "cursor-pointer rounded px-4 py-3 text-black hover:font-bold",
-                        isActive &&
-                          "text-primary-400 bg-primary-200/20 font-bold"
+                        "group flex items-center justify-between rounded-lg px-4 py-3 text-sm font-medium transition-all duration-300",
+                        isActive
+                          ? "bg-primary shadow-primary/20 text-white shadow-md"
+                          : "hover:bg-primary/5 hover:text-primary text-gray-400"
                       )}
                     >
-                      {item}
+                      <span className="relative">
+                        {item}
+                        {!isActive && (
+                          <span className="bg-primary absolute -bottom-0.5 left-0 h-0.5 w-0 transition-all duration-300 group-hover:w-full" />
+                        )}
+                      </span>
+                      {isActive && (
+                        <div className="h-1.5 w-1.5 rounded-full bg-white" />
+                      )}
                     </li>
                   );
                 })}
@@ -66,6 +88,6 @@ export const CategoryAccordion = ({
           </AccordionItem>
         ))}
       </Accordion>
-    </>
+    </div>
   );
 };

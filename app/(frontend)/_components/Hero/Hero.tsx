@@ -6,30 +6,46 @@ import { HeroProps } from "./Hero.types";
 
 export const Hero = ({ title, subtitle }: HeroProps) => {
   return (
-    <section className="relative h-100 w-full overflow-hidden px-4 md:h-200">
+    <section className="relative h-[60vh] min-h-[500px] w-full overflow-hidden md:h-[70vh]">
       <Image
         src={backgroundImage}
         alt="FreshFarm Background"
         placeholder="blur"
-        quality={80}
+        quality={90}
         fill
         sizes="100vw"
         priority
-        className="object-cover object-left md:object-center"
+        className="object-cover object-center transition-transform duration-1000"
       />
-      <div className="absolute inset-0 bg-black/40" />
+      {/* 專業漸層遮罩：左深右淺，確保文字清晰同時展現圖片質感 */}
+      <div className="absolute inset-0 bg-linear-to-r from-black/80 via-black/40 to-transparent" />
 
-      <div className="relative z-10 container mx-auto flex h-full items-center justify-start text-white md:justify-start">
-        <div className="text-start">
-          <div className="lg:flex">
-            <h1 className="text-primary-100 text-2xl font-bold md:me-1 md:text-5xl">
+      <div className="relative z-10 container mx-auto flex h-full items-center px-6">
+        <div className="animate-in fade-in slide-in-from-left-8 max-w-3xl duration-1000">
+          {/* 品牌小標籤 */}
+          <div className="mb-6 flex items-center gap-3">
+            <span className="bg-primary h-[2px] w-8" />
+            <span className="text-primary-100 text-sm font-bold tracking-[0.2em] uppercase">
+              Pure & Natural Organic
+            </span>
+          </div>
+
+          <div className="font-heading space-y-2">
+            <h1 className="text-primary-100 text-5xl font-black tracking-tighter md:text-8xl">
               Fresh Farm
             </h1>
-            <h4 className="mt-1 text-2xl font-bold md:mt-0 md:text-5xl">
+            <h2 className="text-3xl font-bold tracking-tight text-white md:text-6xl">
               {title}
-            </h4>
+            </h2>
           </div>
-          <h4 className="mt-3 text-xl font-bold md:text-3xl">{subtitle}</h4>
+
+          <p className="mt-8 max-w-xl text-lg leading-relaxed text-white/80 md:text-2xl">
+            {subtitle}
+          </p>
+
+          <div className="mt-10 flex gap-4">
+            <div className="bg-primary h-1 w-20 rounded-full" />
+          </div>
         </div>
       </div>
     </section>
