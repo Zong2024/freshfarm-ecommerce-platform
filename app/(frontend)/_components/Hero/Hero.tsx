@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import backgroundImage from "@/public/image/hero-bg.jpg";
+import backgroundImage from "@/public/image/hero-bg.webp";
 
 import { HeroProps } from "./Hero.types";
 
