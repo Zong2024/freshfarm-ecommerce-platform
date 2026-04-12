@@ -11,7 +11,6 @@ export const Hero = ({ title, subtitle }: HeroProps) => {
         src={backgroundImage}
         alt="FreshFarm Background"
         placeholder="blur"
-        quality={90}
         fill
         sizes="100vw"
         priority
