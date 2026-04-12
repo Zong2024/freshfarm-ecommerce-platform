@@ -54,7 +54,7 @@
       <img src="./assets/farm.png" width="100%" alt="Farmer Dashboard">
     </td>
     <td align="center" valign="middle">
-      <img src="https://via.placeholder.com/800x450?text=Checkout+Flow" width="100%" alt="Checkout Flow">
+      <img src="./assets/checkflow.gif" width="100%" alt="Checkout Flow">
     </td>
   </tr>
   <!-- 第二組展示：說明文字行 -->
