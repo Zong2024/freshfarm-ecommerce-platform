@@ -1,5 +1,5 @@
-import { Product } from "@/types/product";
+import { BasicProduct } from "@/types/product";
 
 export interface ProductCardProps {
-  product: Product;
+  product: BasicProduct;
 }

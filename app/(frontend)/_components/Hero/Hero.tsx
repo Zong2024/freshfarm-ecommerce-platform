@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import backgroundImage from "@/public/image/hero-bg.jpg";
+import backgroundImage from "@/public/image/hero-bg.webp";
 
 import { HeroProps } from "./Hero.types";
 
@@ -11,7 +11,6 @@ export const Hero = ({ title, subtitle }: HeroProps) => {
         src={backgroundImage}
         alt="FreshFarm Background"
         placeholder="blur"
-        quality={90}
         fill
         sizes="100vw"
         priority
