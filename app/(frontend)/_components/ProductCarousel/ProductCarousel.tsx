@@ -9,11 +9,13 @@ import {
   ProductCarouselSkeleton,
 } from "@/components/shared/ProductCard";
 
-import { useGetProductsQuery } from "@/lib/store/services/productApi";
+import type { BasicProduct } from "@/types/product";
 
-export function ProductCarousel() {
-  const { data, isLoading, error } = useGetProductsQuery(1);
+interface ProductCarouselProps {
+  products: BasicProduct[];
+}
 
+export function ProductCarousel({ products }: ProductCarouselProps) {
   const swiperConfig = {
     modules: [Autoplay],
     spaceBetween: 24,
@@ -38,13 +40,7 @@ export function ProductCarousel() {
     className: "w-full px-4 !pb-12",
   };
 
-  if (isLoading) {
-    return <ProductCarouselSkeleton />;
-  }
-
-  const products = data?.products?.filter((p) => p.is_enabled === 1) || [];
-
-  if (error || products.length === 0) {
+  if (!products || products.length === 0) {
     return null;
   }
 

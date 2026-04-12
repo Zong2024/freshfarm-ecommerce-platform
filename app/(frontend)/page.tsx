@@ -4,11 +4,28 @@ import { SectionHeader } from "@/app/(frontend)/_components/SectionHeader";
 
 import { ProductCarouselSkeleton } from "@/components/shared/ProductCard";
 
+import { getProducts } from "@/lib/services/product";
+
+import type { BasicProduct } from "@/types/product";
+
 import { CategorySection } from "./_components/CategorySection";
 import { Hero } from "./_components/Hero";
 import { ProductCarousel } from "./_components/ProductCarousel";
 
-export default function Home() {
+export default async function Home() {
+  const data = await getProducts(1);
+  const carouselProducts: BasicProduct[] = (data?.products || [])
+    .slice(0, 10)
+    .map((p) => ({
+      id: p.id,
+      title: p.title,
+      origin_price: p.origin_price,
+      category: p.category,
+      imageUrl: p.imageUrl,
+      description: p.description,
+      price: p.price,
+    }));
+
   return (
     <main className="bg-background min-h-screen">
       <Hero title="從產地到餐桌的直線距離" subtitle="把產地的鮮活，直送你家" />
@@ -23,7 +40,7 @@ export default function Home() {
 
         <div className="mt-12 lg:mt-20">
           <Suspense fallback={<ProductCarouselSkeleton />}>
-            <ProductCarousel />
+            <ProductCarousel products={carouselProducts} />
           </Suspense>
         </div>
       </section>

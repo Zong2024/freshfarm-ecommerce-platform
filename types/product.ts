@@ -57,3 +57,14 @@ export type ProductListUI = {
   products: Product[];
   pagination: Pagination;
 };
+
+export type BasicProduct = Pick<
+  Product,
+  | "id"
+  | "title"
+  | "origin_price"
+  | "category"
+  | "imageUrl"
+  | "description"
+  | "price"
+>;
